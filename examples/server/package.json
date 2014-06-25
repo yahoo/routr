@@ -1,0 +1,10 @@
+{
+  "name": "routr-server-example",
+  "version": "0.0.0",
+  "description": "Simple example application of how to use routr on the server",
+  "main": "app.js",
+  "author": "Lingyan Zhu <lingyan@yahoo-inc.com",
+  "dependencies": {
+    "express": "^4.3.2"
+  }
+}

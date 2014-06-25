@@ -1,0 +1,40 @@
+{
+  "name": "routr",
+  "version": "0.0.1",
+  "description": "A router for both server and client",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ouchtown/routr.git"
+  },
+  "scripts": {
+    "cover": "node node_modules/istanbul/lib/cli.js cover --dir artifacts -- ./node_modules/mocha/bin/_mocha tests/unit/ --recursive --reporter spec",
+    "lint": "./node_modules/.bin/jshint lib tests",
+    "test": "./node_modules/.bin/mocha tests/unit/ --recursive --reporter spec"
+  },
+  "author": "Lingyan Zhu <lingyan@yahoo-inc.com",
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/ouchtown/routr/blob/master/LICENSE.md"
+    }
+  ],
+  "dependencies": {
+    "debug": "^1.0.0",
+    "path-to-regexp": "^0.1.2",
+    "reverend": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "istanbul": "^0.2.10",
+    "jshint": "^2.5.1",
+    "mocha": "^1.20.0",
+    "precommit-hook": "^1.0.2"
+  },
+  "jshintConfig": {
+    "node": true
+  },
+  "keywords": [
+    "router"
+  ]
+}
