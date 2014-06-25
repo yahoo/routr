@@ -1,3 +1,8 @@
+/**
+ * Copyright 2014, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
 var express = require('express'),
     util = require('util'),
     Router = require('../../index'),
