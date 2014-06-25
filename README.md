@@ -13,7 +13,7 @@ var Router = require('routr'),
     route;
 
 var router = new Router({
-    get_user: {
+    view_user: {
         path: '/user/:id',
         method: 'get',
         foo: {
@@ -24,6 +24,10 @@ var router = new Router({
 
 route = router.getRoute('/user/garfield');
 if (route) {
+    // this will output:
+    //   - "view_user" for route.name
+    //   - {id: "garfield"} for route.params
+    //   - {path: "/user/:id", method: "get", foo: { bar: "baz"}} for route.config
     console.log('[Route found]: name=', route.name, 'params=', route.params, 'config=', route.config);
 }
 
