@@ -5,17 +5,21 @@ var express = require('express'),
     router;
 
 router = new Router({
-    get_user: {
+    view_user: {
         path: '/user/:id',
         method: 'get',
-        extraConfigs: {
-            foo: 'bar'
+        foo: {
+            bar: 'baz'
         }
+    },
+    edit_user: {
+        path: '/user/:id',
+        method: 'put'
     }
 });
 
-app.get('*', function (req, res) {
-    var route = router.getRoute(req.path);
+app.all('*', function (req, res) {
+    var route = router.getRoute(req.path, {method: req.method});
     if (route) {
         res.send('[Route found] name=' + route.name + ' params = ' + util.inspect(route.params) + ' config = ' + util.inspect(route.config));
     } else {
