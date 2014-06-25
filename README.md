@@ -39,5 +39,7 @@ License
 This software is free to use under the Yahoo! Inc. BSD license.
 See the [LICENSE file][] for license text and copyright information.
 
-[LICENSE file]: https://github.com/ouchtown/dispatchr/blob/master/LICENSE.md
+[LICENSE file]: https://github.com/ouchtown/routr/blob/master/LICENSE.md
+
+Third-pary open source code used are listed in our [package.json file]( https://github.com/ouchtown/routr/blob/master/package.json).
 
