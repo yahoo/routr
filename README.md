@@ -10,18 +10,24 @@ For more detailed examples, please check out [example applications](https://gith
 ```
 var Router = require('routr'),
     router,
-    route;
+    route,
+    path;
 
-var router = new Router({
+router = new Router({
     view_user: {
         path: '/user/:id',
         method: 'get',
         foo: {
             bar: 'baz'
         }
+    },
+    view_user_post: {
+        path: '/user/:id/post/:post',
+        method: 'get'
     }
 });
 
+// match route
 route = router.getRoute('/user/garfield');
 if (route) {
     // this will output:
@@ -30,6 +36,10 @@ if (route) {
     //   - {path: "/user/:id", method: "get", foo: { bar: "baz"}} for route.config
     console.log('[Route found]: name=', route.name, 'params=', route.params, 'config=', route.config);
 }
+
+// generate url path from route
+// "path" will be "/user/garfield/post/favoriteFood"
+path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'});
 
 ```
 

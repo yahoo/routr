@@ -17,6 +17,10 @@ router = new Router({
             bar: 'baz'
         }
     },
+    view_user_post: {
+        path: '/user/:id/post/:post',
+        method: 'get'
+    },
     edit_user: {
         path: '/user/:id',
         method: 'put'
