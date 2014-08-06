@@ -121,12 +121,16 @@ describe('Router', function () {
         it('check navigate.params if defined', function () {
             var route = router.getRoute('/', {navigate: {params: {id: 'abcd-efg', foo: 'bar'}}});
             expect(route.name).to.equal('offnetwork_article', 'navigate: {params.id matches regexp, foo === bar');
+            expect(route.navigate).to.eql({params: {id: 'abcd-efg', foo: 'bar'}}, 'navigate: {params.id does not match, foo === bar');
             route = router.getRoute('/', {navigate: {params: {id: 'abcd-efg', foo: 'baz'}}});
             expect(route.name).to.equal('home', 'navigate: {params.id matches regexp, foo !== bar');
+            expect(route.navigate).to.eql({params: {id: 'abcd-efg', foo: 'baz'}}, 'navigate: {params.id does not match, foo === bar');
             route = router.getRoute('/', {navigate: {params: {id: 'abcd-efg'}}});
             expect(route.name).to.equal('home', 'navigate: {params.id matches regexp, foo is missing');
+            expect(route.navigate).to.eql({params: {id: 'abcd-efg'}}, 'navigate: {params.id does not match, foo === bar');
             route = router.getRoute('/', {navigate: {params: {id: 'abcd-ef', foo: 'bar'}}});
             expect(route.name).to.equal('home', 'navigate: {params.id does not match, foo === bar');
+            expect(route.navigate).to.eql({params: {id: 'abcd-ef', foo: 'bar'}}, 'navigate: {params.id does not match, foo === bar');
             route = router.getRoute('/', {navigate: {params: {id: undefined}}});
             expect(route.name).to.equal('home', 'navigate.params.id is undefined');
             route = router.getRoute('/');
