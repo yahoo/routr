@@ -1,4 +1,4 @@
-Routr [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr) [![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr)
+Routr [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr) [![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr) [![Coverage Status](https://coveralls.io/repos/yahoo/routr/badge.png?branch=cover)](https://coveralls.io/r/yahoo/routr?branch=cover)
 =========
 
 Routr library is an implementation of router-related functionalities that can be used for both server and client.
