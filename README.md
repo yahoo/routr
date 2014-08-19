@@ -1,13 +1,13 @@
-Routr [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr) [![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr) [![Coverage Status](https://coveralls.io/repos/yahoo/routr/badge.png?branch=master)](https://coveralls.io/r/yahoo/routr?branch=master)
-=========
+# Routr [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr) [![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr) [![Coverage Status](https://coveralls.io/repos/yahoo/routr/badge.png?branch=master)](https://coveralls.io/r/yahoo/routr?branch=master)
+
 
 Routr library is an implementation of router-related functionalities that can be used for both server and client.
 
-Usage
------
+## Usage
+
 For more detailed examples, please check out [example applications](https://github.com/yahoo/routr/tree/master/examples);
 
-```
+```javascript
 var Router = require('routr'),
     router,
     route,
@@ -43,9 +43,8 @@ path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'})
 
 ```
 
+## License
 
-License
--------
 This software is free to use under the Yahoo! Inc. BSD license.
 See the [LICENSE file][] for license text and copyright information.
 
