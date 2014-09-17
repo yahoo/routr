@@ -20,8 +20,8 @@
     }
   ],
   "dependencies": {
-    "debug": "^1.0.0",
-    "path-to-regexp": "^0.2.1",
+    "debug": "^2.0.0",
+    "path-to-regexp": "^1.0.0",
     "reverend": "^0.3.0"
   },
   "devDependencies": {
