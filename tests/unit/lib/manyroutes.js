@@ -30,8 +30,14 @@ describe('ManyRoutes', function () {
 
     beforeEach(function () {
         router = new Router(routes);
+        start = process.hrtime();
     });
 
+    afterEach(function () {
+       var end = process.hrtime(start);
+       console.log('benchmark took %d ms', (end[0] * 1000) + (end[1] / 1000000));
+    });
+    
     describe('#getRoute', function () {
         it('existing route', function () {
             var route = router.getRoute('/9999', {method: 'get'});
