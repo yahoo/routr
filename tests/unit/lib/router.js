@@ -107,6 +107,9 @@ describe('Router', function () {
 
             route = router.getRoute('/new_article', {method: 'post'});
             expect(route.name).to.equal('new_article');
+
+            route = router.getRoute('/new_article?foo=bar', {method: 'post'});
+            expect(route.name).to.equal('new_article');
         });
 
         it('method should be case-insensitive and defaults to get', function () {
