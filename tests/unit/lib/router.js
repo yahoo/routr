@@ -44,7 +44,6 @@ var expect = require('chai').expect,
     router;
 
 describe('Router', function () {
-
     beforeEach(function () {
         router = new Router(routes);
     });
@@ -87,6 +86,44 @@ describe('Router', function () {
             expect(router._routes.new_article.config.page).to.equal('createArticle');
             expect(router._routes.new_article.keys.length).to.equal(0);
             expect(router._routes.new_article.regexp).to.be.a('RegExp');
+        });
+        it('should freeze', function () {
+            var frozen = new Router(routes, {freeze: true});
+            var homeRoute = frozen._routes.home;
+            expect(Object.keys(frozen._routes).length).to.equal(6);
+            expect(homeRoute.name).to.equal('home');
+            expect(homeRoute.config.path).to.equal('/');
+            expect(homeRoute.config.method).to.equal('get');
+            expect(homeRoute.config.page).to.equal('viewHomepage');
+            expect(homeRoute.keys.length).to.equal(0);
+            expect(homeRoute.regexp).to.be.a('RegExp');
+            expect(function () {
+                frozen._routes.foo = 'abc';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.name = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.config.method = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.config.page = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.keys[0] = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.config.regexp = null;
+            }).to.throw(TypeError);
+            expect(Object.keys(frozen._routes).length).to.equal(6);
+            expect(frozen._routes.foo).to.equal(undefined);
+            expect(homeRoute.keys.length).to.equal(0);
+            expect(homeRoute.name).to.equal('home');
+            expect(homeRoute.config.path).to.equal('/');
+            expect(homeRoute.config.method).to.equal('get');
+            expect(homeRoute.config.page).to.equal('viewHomepage');
+            expect(homeRoute.keys.length).to.equal(0);
+            expect(homeRoute.regexp).to.be.a('RegExp');
         });
     });
 
@@ -203,3 +240,12 @@ describe('Router', function () {
         });
     });
 });
+
+describe('Route', function () {
+    it('match', function () {
+        router = new Router(routes);
+        var homeRoute = router._routes.home;
+        expect(homeRoute.match()).to.equal(null, 'empty path returns null');
+    });
+});
+
