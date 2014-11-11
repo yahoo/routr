@@ -71,7 +71,7 @@ Example of the webpack configuration:
 ### Build with Browserify
 Similar to webpack, you can also use the following two utils with your favorite build system:
    * use [envify](https://github.com/hughsk/envify) to set `process.env.NODE_ENV` to the desired environment
-   * use [ugifyjs](https://github.com/mishoo/UglifyJS2) to remove dead code.
+   * use [uglifyjs](https://github.com/mishoo/UglifyJS2) to remove dead code.
 
 Command-line example:
 ```bash
