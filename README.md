@@ -43,6 +43,42 @@ path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'})
 
 ```
 
+## Object.freeze
+We use `Object.freeze` to freeze the router and route objects for non-production environments to ensure the immutability of these objects.
+
+For production environments, it is recommended to use tools like [envify](https://github.com/hughsk/envify) along with [uglify](https://github.com/mishoo/UglifyJS) as part of your build process to strip out the production specific code for performance benefits.
+
+We use `if (process.env.NODE_ENV !== 'production')` to wrap around `Object.freeze()`, so that you can use various tools to build the code for different environments:
+
+### Build with Webpack
+Two main utility plugins:
+   * use [DefinePlugin](http://webpack.github.io/docs/list-of-plugins.html#defineplugin) to define the value for `process.env`
+   * use [UglifyJsPlugin](http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin) to remove dead code.
+
+Example of the webpack configuration:
+```js
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin(),
+        ...
+    ]
+```
+
+### Build with Browserify
+Similar to webpack, you can also use the following two utils with your favorite build system:
+   * use [envify](https://github.com/hughsk/envify) to set `process.env.NODE_ENV` to the desired environment
+   * use [ugifyjs](https://github.com/mishoo/UglifyJS2) to remove dead code.
+
+Command-line example:
+```bash
+$ browserify index.js -t [ envify --NODE_ENV production  ] | uglifyjs -c > bundle.js
+```
+
+
 ## License
 
 This software is free to use under the Yahoo! Inc. BSD license.
