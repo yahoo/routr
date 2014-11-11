@@ -2,7 +2,7 @@
  * Copyright 2014, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-/*globals describe,it,beforeEach */
+/*globals describe,it,beforeEach,process */
 "use strict";
 
 var expect = require('chai').expect,
@@ -44,7 +44,6 @@ var expect = require('chai').expect,
     router;
 
 describe('Router', function () {
-
     beforeEach(function () {
         router = new Router(routes);
     });
@@ -87,6 +86,63 @@ describe('Router', function () {
             expect(router._routes.new_article.config.page).to.equal('createArticle');
             expect(router._routes.new_article.keys.length).to.equal(0);
             expect(router._routes.new_article.regexp).to.be.a('RegExp');
+        });
+        it('should not freeze in production env', function () {
+            var origEnv = process.env.NODE_ENV;
+            process.env.NODE_ENV = 'production';
+            var notFrozen = new Router(routes);
+
+            expect(Object.keys(notFrozen._routes).length).to.equal(6);
+            notFrozen._routes.foo = null;
+            expect(notFrozen._routes.foo).to.equal(null);
+            expect(Object.keys(notFrozen._routes).length).to.equal(7);
+
+            var homeRoute = notFrozen._routes.home;
+            expect(homeRoute.name).to.equal('home');
+            homeRoute.name = 'changed';
+            expect(homeRoute.name).to.equal('changed');
+            process.env.NODE_ENV = origEnv;
+        });
+        it('should freeze in non-production env', function () {
+            var origEnv = process.env.NODE_ENV;
+            process.env.NODE_ENV = 'development';
+            var frozen = new Router(routes);
+            var homeRoute = frozen._routes.home;
+            expect(Object.keys(frozen._routes).length).to.equal(6);
+            expect(homeRoute.name).to.equal('home');
+            expect(homeRoute.config.path).to.equal('/');
+            expect(homeRoute.config.method).to.equal('get');
+            expect(homeRoute.config.page).to.equal('viewHomepage');
+            expect(homeRoute.keys.length).to.equal(0);
+            expect(homeRoute.regexp).to.be.a('RegExp');
+            expect(function () {
+                frozen._routes.foo = 'abc';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.name = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.config.method = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.config.page = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.keys[0] = 'unfreeze!';
+            }).to.throw(TypeError);
+            expect(function () {
+                homeRoute.config.regexp = null;
+            }).to.throw(TypeError);
+            expect(Object.keys(frozen._routes).length).to.equal(6);
+            expect(frozen._routes.foo).to.equal(undefined);
+            expect(homeRoute.keys.length).to.equal(0);
+            expect(homeRoute.name).to.equal('home');
+            expect(homeRoute.config.path).to.equal('/');
+            expect(homeRoute.config.method).to.equal('get');
+            expect(homeRoute.config.page).to.equal('viewHomepage');
+            expect(homeRoute.keys.length).to.equal(0);
+            expect(homeRoute.regexp).to.be.a('RegExp');
+            process.env.NODE_ENV = origEnv;
         });
     });
 
@@ -203,3 +259,12 @@ describe('Router', function () {
         });
     });
 });
+
+describe('Route', function () {
+    it('match', function () {
+        router = new Router(routes);
+        var homeRoute = router._routes.home;
+        expect(homeRoute.match()).to.equal(null, 'empty path returns null');
+    });
+});
+
