@@ -1,4 +1,6 @@
-# Routr [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr) [![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr) [![Coverage Status](https://coveralls.io/repos/yahoo/routr/badge.png?branch=master)](https://coveralls.io/r/yahoo/routr?branch=master)
+# Routr 
+
+[![npm version](https://badge.fury.io/js/routr.svg)](http://badge.fury.io/js/routr) [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr) [![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr) [![Coverage Status](https://coveralls.io/repos/yahoo/routr/badge.png?branch=master)](https://coveralls.io/r/yahoo/routr?branch=master)
 
 
 Routr library is an implementation of router-related functionalities that can be used for both server and client. It follows the same routing rules as [Express](http://expressjs.com/) by using the same library. This library does not use callbacks for routes, instead just mapping them to string names that can be used as application state and used within your application later. For instance in Flux, the current route would be held as state in a store.
