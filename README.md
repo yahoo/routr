@@ -14,12 +14,9 @@ Routr library is an implementation of router-related functionalities that can be
 For more detailed examples, please check out [example applications](https://github.com/yahoo/routr/tree/master/examples);
 
 ```javascript
-var Router = require('routr'),
-    router,
-    route,
-    path;
+var Router = require('routr');
 
-router = new Router({
+var router = new Router({
     view_user: {
         path: '/user/:id',
         method: 'get',
@@ -34,18 +31,19 @@ router = new Router({
 });
 
 // match route
-route = router.getRoute('/user/garfield');
+var route = router.getRoute('/user/garfield');
 if (route) {
     // this will output:
     //   - "view_user" for route.name
+    //   - "/user/garfield" for route.url
     //   - {id: "garfield"} for route.params
     //   - {path: "/user/:id", method: "get", foo: { bar: "baz"}} for route.config
-    console.log('[Route found]: name=', route.name, 'params=', route.params, 'config=', route.config);
+    console.log('[Route found]:', route);
 }
 
-// generate url path from route
+// generate path name (does not include query string) from route
 // "path" will be "/user/garfield/post/favoriteFood"
-path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'});
+var path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'});
 
 ```
 

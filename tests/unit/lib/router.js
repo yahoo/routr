@@ -5,43 +5,43 @@
 /*globals describe,it,beforeEach,process */
 "use strict";
 
-var expect = require('chai').expect,
-    Router = require('../../../lib/router'),
-    routes = {
-        article: {
-            path: '/:site/:category?/:subcategory?/:alias',
-            method: 'get',
-            page: 'viewArticle'
-        },
-        offnetwork_article: {
-            path: '/',
-            method: 'get',
-            navigate: {
-                params: {
-                    id: /^\w{4}\-\w{3}$/,
-                    foo: 'bar'
-                }
-            },
-            page: 'viewArticle'
-        },
-        home: {
-            path: '/',
-            method: 'get',
-            page: 'viewHomepage'
-        },
-        new_article: {
-            path: '/new_article',
-            method: 'post',
-            page: 'createArticle'
-        },
-        custom_match_params: {
-            path: '/posts/:id(\\d+)'
-        },
-        unamed_params: {
-            path: '/:foo/(.*)'
-        }
+var expect = require('chai').expect;
+var Router = require('../../../lib/router');
+var routes = {
+    article: {
+        path: '/:site/:category?/:subcategory?/:alias',
+        method: 'get',
+        page: 'viewArticle'
     },
-    router;
+    offnetwork_article: {
+        path: '/',
+        method: 'get',
+        navigate: {
+            params: {
+                id: /^\w{4}\-\w{3}$/,
+                foo: 'bar'
+            }
+        },
+        page: 'viewArticle'
+    },
+    home: {
+        path: '/',
+        method: 'get',
+        page: 'viewHomepage'
+    },
+    new_article: {
+        path: '/new_article',
+        method: 'post',
+        page: 'createArticle'
+    },
+    custom_match_params: {
+        path: '/posts/:id(\\d+)'
+    },
+    unamed_params: {
+        path: '/:foo/(.*)'
+    }
+};
+var router;
 
 describe('Router', function () {
     beforeEach(function () {
@@ -149,6 +149,24 @@ describe('Router', function () {
     describe('#getRoute', function () {
         it('existing route', function () {
             var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
+
+            route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html?query=true', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
+
+            route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html?query=true#hasHashToo', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
+
+            route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html#hasHash', {method: 'get'});
             expect(route.name).to.equal('article');
             expect(route.params.site).to.equal('finance');
             expect(route.params.category).to.equal('news');
