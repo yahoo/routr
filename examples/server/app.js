@@ -28,7 +28,7 @@ router = new Router({
 });
 
 app.all('*', function (req, res) {
-    var route = router.getRoute(req.path, {method: req.method});
+    var route = router.getRoute(req.url, {method: req.method});
     if (route) {
         res.send('[Route found] name=' + route.name + ' params = ' + util.inspect(route.params) + ' config = ' + util.inspect(route.config));
     } else {
