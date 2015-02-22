@@ -85,7 +85,7 @@ $ browserify index.js -t [ envify --NODE_ENV production  ] | uglifyjs -c > bundl
 
 ## API
 
-- [Route](https://github.com/yahoo/routr/blob/master/docs/routr.md)
+- [Routr](https://github.com/yahoo/routr/blob/master/docs/routr.md)
 
 ## License
 
