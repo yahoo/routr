@@ -2,7 +2,7 @@
 
 ## Constructor(routes)
 
-Creates a new fetchr plugin instance with the following parameters:
+Creates a new routr plugin instance with the following parameters:
 
  * `routes` (optional): Route table, which is a name to router config map.
 
