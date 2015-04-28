@@ -39,6 +39,11 @@ var routes = {
     },
     unamed_params: {
         path: '/:foo/(.*)'
+    },
+    case_insensitive: {
+        path: '/case_insensitive',
+        method: 'GET',
+        page: 'viewCaseInsensitive'
     }
 };
 var router;
@@ -50,7 +55,7 @@ describe('Router', function () {
 
     describe('#constructor', function () {
         it('should init correctly', function () {
-            expect(Object.keys(router._routes).length).to.equal(6);
+            expect(Object.keys(router._routes).length).to.equal(7);
 
             expect(router._routes.article.name).to.equal('article');
             expect(router._routes.article.config.path).to.equal('/:site/:category?/:subcategory?/:alias');
@@ -86,16 +91,23 @@ describe('Router', function () {
             expect(router._routes.new_article.config.page).to.equal('createArticle');
             expect(router._routes.new_article.keys.length).to.equal(0);
             expect(router._routes.new_article.regexp).to.be.a('RegExp');
+
+            expect(router._routes.case_insensitive.name).to.equal('case_insensitive');
+            expect(router._routes.case_insensitive.config.path).to.equal('/case_insensitive');
+            expect(router._routes.case_insensitive.config.method).to.equal('GET');
+            expect(router._routes.case_insensitive.config.page).to.equal('viewCaseInsensitive');
+            expect(router._routes.case_insensitive.keys.length).to.equal(0);
+            expect(router._routes.case_insensitive.regexp).to.be.a('RegExp');
         });
         it('should not freeze in production env', function () {
             var origEnv = process.env.NODE_ENV;
             process.env.NODE_ENV = 'production';
             var notFrozen = new Router(routes);
 
-            expect(Object.keys(notFrozen._routes).length).to.equal(6);
+            expect(Object.keys(notFrozen._routes).length).to.equal(7);
             notFrozen._routes.foo = null;
             expect(notFrozen._routes.foo).to.equal(null);
-            expect(Object.keys(notFrozen._routes).length).to.equal(7);
+            expect(Object.keys(notFrozen._routes).length).to.equal(8);
 
             var homeRoute = notFrozen._routes.home;
             expect(homeRoute.name).to.equal('home');
@@ -108,7 +120,7 @@ describe('Router', function () {
             process.env.NODE_ENV = 'development';
             var frozen = new Router(routes);
             var homeRoute = frozen._routes.home;
-            expect(Object.keys(frozen._routes).length).to.equal(6);
+            expect(Object.keys(frozen._routes).length).to.equal(7);
             expect(homeRoute.name).to.equal('home');
             expect(homeRoute.config.path).to.equal('/');
             expect(homeRoute.config.method).to.equal('get');
@@ -133,7 +145,7 @@ describe('Router', function () {
             expect(function () {
                 homeRoute.config.regexp = null;
             }).to.throw(TypeError);
-            expect(Object.keys(frozen._routes).length).to.equal(6);
+            expect(Object.keys(frozen._routes).length).to.equal(7);
             expect(frozen._routes.foo).to.equal(undefined);
             expect(homeRoute.keys.length).to.equal(0);
             expect(homeRoute.name).to.equal('home');
@@ -193,6 +205,8 @@ describe('Router', function () {
             expect(route.name).to.equal('article');
             route = router.getRoute('/new_article', {method: 'POST'});
             expect(route.name).to.equal('new_article');
+            route = router.getRoute('/case_insensitive', {method: 'get'});
+            expect(route.name).to.equal('case_insensitive');
         });
 
         it('check navigate.params if defined', function () {
