@@ -30,7 +30,7 @@
     "istanbul": "^0.3.2",
     "jshint": "^2.5.1",
     "mocha": "^2.0.1",
-    "precommit-hook": "^1.0.2"
+    "precommit-hook": "^2.0.1"
   },
   "jshintConfig": {
     "node": true
