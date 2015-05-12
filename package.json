@@ -21,8 +21,7 @@
   ],
   "dependencies": {
     "debug": "^2.0.0",
-    "path-to-regexp": "^1.0.0",
-    "reverend": "^0.3.0"
+    "path-to-regexp": "^1.1.1"
   },
   "devDependencies": {
     "chai": "^2.0.0",
