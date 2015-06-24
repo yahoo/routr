@@ -48,6 +48,14 @@ var routes = {
     array_path: {
         path: ['/array_path']
     },
+    array_path_name_collision: {
+        path: [
+            '/array/path/with/collision/foo/:key',
+            '/array/path/with/collision/bar/:key'
+        ],
+        method: 'GET',
+        page: 'arrayPathNameCollision'
+    },
     invalid_path: {
         path: 123
     }
@@ -61,7 +69,7 @@ describe('Router', function () {
 
     describe('#constructor', function () {
         it('should init correctly', function () {
-            expect(Object.keys(router._routes).length).to.equal(9);
+            expect(Object.keys(router._routes).length).to.equal(10);
 
             expect(router._routes.article.name).to.equal('article');
             expect(router._routes.article.config.path).to.equal('/:site/:category?/:subcategory?/:alias');
@@ -120,10 +128,10 @@ describe('Router', function () {
             process.env.NODE_ENV = 'production';
             var notFrozen = new Router(routes);
 
-            expect(Object.keys(notFrozen._routes).length).to.equal(9);
+            expect(Object.keys(notFrozen._routes).length).to.equal(10);
             notFrozen._routes.foo = null;
             expect(notFrozen._routes.foo).to.equal(null);
-            expect(Object.keys(notFrozen._routes).length).to.equal(10);
+            expect(Object.keys(notFrozen._routes).length).to.equal(11);
 
             var homeRoute = notFrozen._routes.home;
             expect(homeRoute.name).to.equal('home');
@@ -136,7 +144,7 @@ describe('Router', function () {
             process.env.NODE_ENV = 'development';
             var frozen = new Router(routes);
             var homeRoute = frozen._routes.home;
-            expect(Object.keys(frozen._routes).length).to.equal(9);
+            expect(Object.keys(frozen._routes).length).to.equal(10);
             expect(homeRoute.name).to.equal('home');
             expect(homeRoute.config.path).to.equal('/');
             expect(homeRoute.config.method).to.equal('get');
@@ -161,7 +169,7 @@ describe('Router', function () {
             expect(function () {
                 homeRoute.config.regexp = null;
             }).to.throw(TypeError);
-            expect(Object.keys(frozen._routes).length).to.equal(9);
+            expect(Object.keys(frozen._routes).length).to.equal(10);
             expect(frozen._routes.foo).to.equal(undefined);
             expect(homeRoute.keys.length).to.equal(0);
             expect(homeRoute.name).to.equal('home');
@@ -254,6 +262,15 @@ describe('Router', function () {
             route = router.getRoute('/new_article', 'delete');
             expect(route).to.equal(null);
         });
+        it('array route with param name collision first', function () {
+            var route = router.getRoute('/array/path/with/collision/foo/abc');
+            expect(route.params.key).to.equal('abc');
+        });
+        it('array route with param name collision second', function () {
+            var route = router.getRoute('/array/path/with/collision/bar/abc');
+            expect(route.params.key).to.equal('abc');
+        });
+
     });
 
     describe('#makePath', function () {
