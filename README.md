@@ -16,19 +16,21 @@ For more detailed examples, please check out [example applications](https://gith
 ```javascript
 var Router = require('routr');
 
-var router = new Router({
-    view_user: {
+var router = new Router([
+    {
+        name: 'view_user',
         path: '/user/:id',
         method: 'get',
         foo: {
             bar: 'baz'
         }
     },
-    view_user_post: {
+    {
+        name: 'view_user_post',
         path: '/user/:id/post/:post',
         method: 'get'
     }
-});
+]);
 
 // match route
 var route = router.getRoute('/user/garfield');
