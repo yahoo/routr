@@ -10,14 +10,11 @@ Creates a new routr plugin instance with the following parameters:
 
 ### getRoute(url, options)
 
-Returns the matched route info if path/method/navigate.params matches to a route; null otherwise.
+Returns the matched route info if path/method matches to a route; null otherwise.
 
  * `url` (required) The url to be used for route matching.  Query strings are **not** considered when performing the match.
  * `options` options object
  * `options.method` (optional) The case-insensitive HTTP method string. DEFAULT: 'get'
- * `options.navigate` (required) The navigation info.
- * `options.navigate.type` (required) The navigation type: 'pageload', 'click', 'popstate'.
- * `options.navigate.params` (optional) The navigation params (that are not part of the path).
 
 ### makePath(name, params)
 
