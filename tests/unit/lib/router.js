@@ -254,12 +254,16 @@ describe('Router', function () {
         it('method should be case-insensitive and defaults to get', function () {
             var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html');
             expect(route.name).to.equal('article');
+            expect(route.method).to.equal('GET');
             route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'GET'});
             expect(route.name).to.equal('article');
+            expect(route.method).to.equal('GET');
             route = router.getRoute('/new_article', {method: 'POST'});
+            expect(route.method).to.equal('POST');
             expect(route.name).to.equal('new_article');
             route = router.getRoute('/case_insensitive', {method: 'get'});
             expect(route.name).to.equal('case_insensitive');
+            expect(route.method).to.equal('GET');
         });
 
         it('non-existing route', function () {

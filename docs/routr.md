@@ -8,7 +8,8 @@ Creates a new routr plugin instance with the following parameters:
  ** `route.name`: Name of the route (used for path making)
  ** `route.path`: The matching pattern of the route. Follows rules of [path-to-regexp](https://github
  .com/pillarjs/path-to-regexp)
- ** `route.method=*`: The method that the path should match to. Will match all methods if `undefined` and no methods
+ ** `route.method=undefined`: The method that the path should match to. Will match all methods if `undefined` and no 
+ methods
  if `null`.
  * `options` (optional): Options for parsing and generating the urls
  ** `options.queryLib=require('query-string')`: Library to use to `parse` and `stringify` query strings
