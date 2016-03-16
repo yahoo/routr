@@ -228,6 +228,8 @@ describe('Router', function () {
 
                     route = router.getRoute('/new_article?foo=bar', {method: 'post'});
                     expect(route.name).to.equal('new_article');
+                    expect(route.params).to.deep.equal({});
+                    expect(route.query).to.deep.equal({foo: 'bar'});
                 });
 
                 it('method should be case-insensitive and defaults to get', function () {
@@ -301,6 +303,16 @@ describe('Router', function () {
                         0: 'bar'
                     });
                     expect(path).to.equal('/foo/bar');
+                });
+                it('handle query params', function () {
+                    var path = router.makePath('unamed_params', {
+                        foo: 'foo',
+                        0: 'bar'
+                    }, {
+                        foo: 'bar',
+                        baz: 'foo'
+                    });
+                    expect(path).to.equal('/foo/bar?baz=foo&foo=bar');
                 });
                 it('non-existing route', function () {
                     var path = router.makePath('article_does_not_exist', {
