@@ -4,7 +4,11 @@
 
 Creates a new routr plugin instance with the following parameters:
 
- * `routes` (optional): Route table, which is a name to router config map.
+ * `routes` (optional): Ordered list of routes used for matching.
+ ** `route.name`: Name of the route (used for path making)
+ ** `route.path`: The matching pattern of the route. Follows rules of [path-to-regexp](https://github
+ .com/pillarjs/path-to-regexp)
+ ** `route.method=GET`: The method that the path should match to.
 
 ## Instance Methods
 
