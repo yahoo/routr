@@ -7,6 +7,7 @@
 
 var expect = require('chai').expect;
 var Router = require('../../../lib/router');
+var sinon = require('sinon');
 var routesObject = {
     article: {
         path: '/:site/:category?/:subcategory?/:alias',
@@ -228,6 +229,8 @@ describe('Router', function () {
 
                     route = router.getRoute('/new_article?foo=bar', {method: 'post'});
                     expect(route.name).to.equal('new_article');
+                    expect(route.params).to.deep.equal({});
+                    expect(route.query).to.deep.equal({foo: 'bar'});
                 });
 
                 it('method should be case-insensitive and defaults to get', function () {
@@ -302,6 +305,16 @@ describe('Router', function () {
                     });
                     expect(path).to.equal('/foo/bar');
                 });
+                it('handle query params', function () {
+                    var path = router.makePath('unamed_params', {
+                        foo: 'foo',
+                        0: 'bar'
+                    }, {
+                        foo: 'bar',
+                        baz: 'foo'
+                    });
+                    expect(path).to.equal('/foo/bar?baz=foo&foo=bar');
+                });
                 it('non-existing route', function () {
                     var path = router.makePath('article_does_not_exist', {
                         site: 'SITE',
@@ -346,6 +359,44 @@ describe('Router', function () {
                 }
             ]);
         }).to.throw(Error);
+    });
+
+    it('should allow custom query string library', function () {
+        var queryLib = {
+            parse: sinon.spy(function (queryString) {
+                return queryString.split('&').reduce(function (a, v) {
+                    var split = v.split('=');
+                    a[split[0]] = split[1] || null;
+                    return a;
+                }, {});
+            }),
+            stringify: sinon.spy(function (queryObject) {
+                return Object.keys(queryObject).map(function (key) {
+                    return key + '=' + queryObject[key];
+                }).join('&');
+            })
+        };
+        var router = new Router([
+            {
+                name: 'home',
+                path: '/',
+                method: 'get'
+            }
+        ], {
+            queryLib: queryLib
+        });
+        var matched = router.getRoute('/?foo=bar&bar=baz');
+        expect(queryLib.parse.called).to.equal(true);
+        expect(matched.query).to.deep.equal({
+            foo: 'bar',
+            bar: 'baz'
+        });
+        var stringified = router.makePath('home', {}, {
+            foo: 'bar',
+            bar: 'baz'
+        });
+        expect(queryLib.stringify.called).to.equal(true);
+        expect(stringified).to.equal('/?foo=bar&bar=baz');
     });
 });
 

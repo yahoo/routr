@@ -33,19 +33,20 @@ var router = new Router([
 ]);
 
 // match route
-var route = router.getRoute('/user/garfield');
+var route = router.getRoute('/user/garfield?foo=bar');
 if (route) {
     // this will output:
     //   - "view_user" for route.name
     //   - "/user/garfield" for route.url
     //   - {id: "garfield"} for route.params
     //   - {path: "/user/:id", method: "get", foo: { bar: "baz"}} for route.config
+    //   - { foo: 'bar' } for route.query
     console.log('[Route found]:', route);
 }
 
 // generate path name (does not include query string) from route
-// "path" will be "/user/garfield/post/favoriteFood"
-var path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'});
+// "path" will be "/user/garfield/post/favoriteFood?meal=breakfast"
+var path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'}, { meal: 'breakfast' });
 
 ```
 

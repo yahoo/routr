@@ -1,6 +1,6 @@
 # Routr API
 
-## Constructor(routes)
+## Constructor(routes, options)
 
 Creates a new routr plugin instance with the following parameters:
 
@@ -9,6 +9,8 @@ Creates a new routr plugin instance with the following parameters:
  ** `route.path`: The matching pattern of the route. Follows rules of [path-to-regexp](https://github
  .com/pillarjs/path-to-regexp)
  ** `route.method=GET`: The method that the path should match to.
+ * `options` (optional): Options for parsing and generating the urls
+ ** `options.queryLib=require('query-string')`: Library to use to `parse` and `stringify` query strings
 
 ## Instance Methods
 
@@ -20,9 +22,10 @@ Returns the matched route info if path/method matches to a route; null otherwise
  * `options` options object
  * `options.method` (optional) The case-insensitive HTTP method string. DEFAULT: 'get'
 
-### makePath(name, params)
+### makePath(name, params, query)
 
 Generates a path string with the route with the given name, using the specified params.
 
  * `name` (required)  The route name
- * `options` (required) The route parameters to be used to create the path string
+ * `params` (required) The route parameters to be used to create the path string
+ * `query` (optional) The query parameters to be used to create the path string
