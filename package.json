@@ -38,9 +38,10 @@
     "pre-commit": "^1.0.7",
     "sinon": "^1.17.3"
   },
-  "jshintConfig": {
-    "node": true
-  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "keywords": [
     "yahoo",
     "router"
