@@ -39,7 +39,19 @@ var routesObject = {
         path: '/posts/:id(\\d+)'
     },
     unamed_params: {
-        path: '/:foo/(.*)'
+        path: '/:foo/(.*)',
+        method: null
+    },
+    no_methods: {
+        path: '/no_methods',
+        method: null
+    },
+    multi_methods: {
+        path: '/multi_methods',
+        method: ['get', 'post']
+    },
+    all_methods: {
+        path: '/all_methods'
     },
     case_insensitive: {
         path: '/case_insensitive',
@@ -66,19 +78,19 @@ var routesArray = Object.keys(routesObject).map(function (routeName) {
         name: routeName
     });
 });
-var router;
 
 describe('Router', function () {
-    var text = ['routes object', 'routes array'];
     [routesObject, routesArray].forEach(function (routes, key) {
+        var text = ['routes object', 'routes array'];
         describe(text[key], function () {
+            var router;
             beforeEach(function () {
                 router = new Router(routes);
             });
 
             describe('#constructor', function () {
                 it('should init correctly', function () {
-                    expect(Object.keys(router._routes).length).to.equal(10);
+                    expect(Object.keys(router._routes).length).to.equal(routesArray.length);
 
                     expect(router._routes.article.name).to.equal('article');
                     expect(router._routes.article.config.path).to.equal('/:site/:category?/:subcategory?/:alias');
@@ -137,10 +149,10 @@ describe('Router', function () {
                     process.env.NODE_ENV = 'production';
                     var notFrozen = new Router(routes);
 
-                    expect(Object.keys(notFrozen._routes).length).to.equal(10);
+                    expect(Object.keys(notFrozen._routes).length).to.equal(routesArray.length);
                     notFrozen._routes.foo = null;
                     expect(notFrozen._routes.foo).to.equal(null);
-                    expect(Object.keys(notFrozen._routes).length).to.equal(11);
+                    expect(Object.keys(notFrozen._routes).length).to.equal(routesArray.length + 1);
 
                     var homeRoute = notFrozen._routes.home;
                     expect(homeRoute.name).to.equal('home');
@@ -153,7 +165,7 @@ describe('Router', function () {
                     process.env.NODE_ENV = 'development';
                     var frozen = new Router(routes);
                     var homeRoute = frozen._routes.home;
-                    expect(Object.keys(frozen._routes).length).to.equal(10);
+                    expect(Object.keys(frozen._routes).length).to.equal(routesArray.length);
                     expect(homeRoute.name).to.equal('home');
                     expect(homeRoute.config.path).to.equal('/');
                     expect(homeRoute.config.method).to.equal('get');
@@ -178,7 +190,7 @@ describe('Router', function () {
                     expect(function () {
                         homeRoute.config.regexp = null;
                     }).to.throw(TypeError);
-                    expect(Object.keys(frozen._routes).length).to.equal(10);
+                    expect(Object.keys(frozen._routes).length).to.equal(routesArray.length);
                     expect(frozen._routes.foo).to.equal(undefined);
                     expect(homeRoute.keys.length).to.equal(0);
                     expect(homeRoute.name).to.equal('home');
@@ -190,149 +202,180 @@ describe('Router', function () {
                     process.env.NODE_ENV = origEnv;
                 });
             });
+        });
+    });
 
-            describe('#getRoute', function () {
-                it('existing route', function () {
-                    var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'get'});
-                    expect(route.name).to.equal('article');
-                    expect(route.params.site).to.equal('finance');
-                    expect(route.params.category).to.equal('news');
-                    expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
+    describe('#getRoute', function () {
+        var router;
+        beforeEach(function () {
+            router = new Router(routesArray);
+        });
+        it('existing route', function () {
+            var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
 
-                    route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html?query=true', {method: 'get'});
-                    expect(route.name).to.equal('article');
-                    expect(route.params.site).to.equal('finance');
-                    expect(route.params.category).to.equal('news');
-                    expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
+            route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html?query=true', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
 
-                    route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html?query=true#hasHashToo', {method: 'get'});
-                    expect(route.name).to.equal('article');
-                    expect(route.params.site).to.equal('finance');
-                    expect(route.params.category).to.equal('news');
-                    expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
+            route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html?query=true#hasHashToo', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
 
-                    route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html#hasHash', {method: 'get'});
-                    expect(route.name).to.equal('article');
-                    expect(route.params.site).to.equal('finance');
-                    expect(route.params.category).to.equal('news');
-                    expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
+            route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html#hasHash', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('e-t-initially-horror-film-202700630.html');
 
-                    route = router.getRoute('/sports/blogs/nfl-shutdown-corner/report-says-aaron-hernandez-having-trouble-paying-legal-bills-215349137.html', {method: 'get'});
-                    expect(route.name).to.equal('article');
-                    expect(route.params.site).to.equal('sports');
-                    expect(route.params.category).to.equal('blogs');
-                    expect(route.params.subcategory).to.equal('nfl-shutdown-corner');
-                    expect(route.params.alias).to.equal('report-says-aaron-hernandez-having-trouble-paying-legal-bills-215349137.html');
+            route = router.getRoute('/sports/blogs/nfl-shutdown-corner/report-says-aaron-hernandez-having-trouble-paying-legal-bills-215349137.html', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('sports');
+            expect(route.params.category).to.equal('blogs');
+            expect(route.params.subcategory).to.equal('nfl-shutdown-corner');
+            expect(route.params.alias).to.equal('report-says-aaron-hernandez-having-trouble-paying-legal-bills-215349137.html');
 
-                    route = router.getRoute('/new_article', {method: 'post'});
-                    expect(route.name).to.equal('new_article');
+            route = router.getRoute('/new_article', {method: 'post'});
+            expect(route.name).to.equal('new_article');
 
-                    route = router.getRoute('/new_article?foo=bar', {method: 'post'});
-                    expect(route.name).to.equal('new_article');
-                    expect(route.params).to.deep.equal({});
-                    expect(route.query).to.deep.equal({foo: 'bar'});
-                });
+            route = router.getRoute('/new_article?foo=bar', {method: 'post'});
+            expect(route.name).to.equal('new_article');
+            expect(route.params).to.deep.equal({});
+            expect(route.query).to.deep.equal({foo: 'bar'});
+        });
 
-                it('method should be case-insensitive and defaults to get', function () {
-                    var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html');
-                    expect(route.name).to.equal('article');
-                    route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'GET'});
-                    expect(route.name).to.equal('article');
-                    route = router.getRoute('/new_article', {method: 'POST'});
-                    expect(route.name).to.equal('new_article');
-                    route = router.getRoute('/case_insensitive', {method: 'get'});
-                    expect(route.name).to.equal('case_insensitive');
-                });
+        it('method should be case-insensitive and defaults to get', function () {
+            var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html');
+            expect(route.name).to.equal('article');
+            route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'GET'});
+            expect(route.name).to.equal('article');
+            route = router.getRoute('/new_article', {method: 'POST'});
+            expect(route.name).to.equal('new_article');
+            route = router.getRoute('/case_insensitive', {method: 'get'});
+            expect(route.name).to.equal('case_insensitive');
+        });
 
-                it('non-existing route', function () {
-                    var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'post'});
-                    expect(route).to.equal(null);
+        it('non-existing route', function () {
+            var route = router.getRoute('/finance/news/e-t-initially-horror-film-202700630.html', {method: 'post'});
+            expect(route).to.equal(null);
 
-                    route = router.getRoute('/finance');
-                    expect(route).to.equal(null);
+            route = router.getRoute('/finance');
+            expect(route).to.equal(null);
 
-                    route = router.getRoute('/new_article', 'delete');
-                    expect(route).to.equal(null);
-                });
-                it('array route with param name collision first', function () {
-                    var route = router.getRoute('/array/path/with/collision/foo/abc');
-                    expect(route.params.key).to.equal('abc');
-                });
-                it('array route with param name collision second', function () {
-                    var route = router.getRoute('/array/path/with/collision/bar/abc');
-                    expect(route.params.key).to.equal('abc');
-                });
+            route = router.getRoute('/new_article', 'delete');
+            expect(route).to.equal(null);
+        });
+        it('array route with param name collision first', function () {
+            var route = router.getRoute('/array/path/with/collision/foo/abc');
+            expect(route.params.key).to.equal('abc');
+        });
+        it('array route with param name collision second', function () {
+            var route = router.getRoute('/array/path/with/collision/bar/abc');
+            expect(route.params.key).to.equal('abc');
+        });
 
+        it('should allow route to match multiple methods', function () {
+            var route = 'multi_methods';
+            expect(router.getRoute('/' + route).name).to.equal(route);
+            expect(router.getRoute('/' + route, {method: 'post'}).name).to.equal(route);
+            expect(router.getRoute('/' + route, {method: 'put'})).to.equal(null);
+            expect(router.getRoute('/' + route, {method: 'delete'})).to.equal(null);
+        });
+
+        it('should allow route to match all methods', function () {
+            var route = 'all_methods';
+            expect(router.getRoute('/' + route).name).to.equal(route);
+            expect(router.getRoute('/' + route, {method: 'post'}).name).to.equal(route);
+            expect(router.getRoute('/' + route, {method: 'put'}).name).to.equal(route);
+            expect(router.getRoute('/' + route, {method: 'delete'}).name).to.equal(route);
+        });
+
+        it('should allow route to match no methods', function () {
+            var route = 'no_methods';
+            expect(router.getRoute('/' + route)).to.equal(null);
+            expect(router.getRoute('/' + route, {method: 'post'})).to.equal(null);
+            expect(router.getRoute('/' + route, {method: 'put'})).to.equal(null);
+            expect(router.getRoute('/' + route, {method: 'delete'})).to.equal(null);
+        });
+    });
+
+    describe('#makePath', function () {
+        var router;
+        beforeEach(function () {
+            router = new Router(routesArray);
+        });
+        it('existing route', function () {
+            var path = router.makePath('article', {
+                site: 'SITE',
+                category: 'CATEGORY',
+                subcategory: 'SUBCATEGORY',
+                alias: 'ALIAS.html'
             });
-
-            describe('#makePath', function () {
-                it('existing route', function () {
-                    var path = router.makePath('article', {
-                        site: 'SITE',
-                        category: 'CATEGORY',
-                        subcategory: 'SUBCATEGORY',
-                        alias: 'ALIAS.html'
-                    });
-                    expect(path).to.equal('/SITE/CATEGORY/SUBCATEGORY/ALIAS.html');
-                });
-                it('handle optional params', function () {
-                    var path = router.makePath('article', {
-                        site: 'SITE',
-                        category: 'CATEGORY',
-                        alias: 'ALIAS.html'
-                    });
-                    expect(path).to.equal('/SITE/CATEGORY/ALIAS.html');
-                    path = router.makePath('article', {
-                        site: 'SITE',
-                        alias: 'ALIAS.html'
-                    });
-                    expect(path).to.equal('/SITE/ALIAS.html');
-                });
-                it('handle custom match params', function () {
-                    var path = router.makePath('custom_match_params', {
-                        id: '12345'
-                    });
-                    expect(path).to.equal('/posts/12345');
-                    path = router.makePath('custom_match_params', {
-                        id: '12345abc'
-                    });
-                    expect(path).to.equal(null);
-                });
-                it('handle unamed params', function () {
-                    var path = router.makePath('unamed_params', {
-                        foo: 'foo',
-                        0: 'bar'
-                    });
-                    expect(path).to.equal('/foo/bar');
-                });
-                it('handle query params', function () {
-                    var path = router.makePath('unamed_params', {
-                        foo: 'foo',
-                        0: 'bar'
-                    }, {
-                        foo: 'bar',
-                        baz: 'foo'
-                    });
-                    expect(path).to.equal('/foo/bar?baz=foo&foo=bar');
-                });
-                it('non-existing route', function () {
-                    var path = router.makePath('article_does_not_exist', {
-                        site: 'SITE',
-                        category: 'CATEGORY',
-                        subcategory: 'SUBCATEGORY',
-                        alias: 'ALIAS.html'
-                    });
-                    expect(path).to.equal(null);
-                });
-                it('array route', function () {
-                    var path = router.makePath('array_path', {});
-                    expect(path).to.equal('/array_path');
-                });
-                it('invalid route', function () {
-                    var path = router.makePath('invalid_path', {});
-                    expect(path).to.equal(null);
-                });
+            expect(path).to.equal('/SITE/CATEGORY/SUBCATEGORY/ALIAS.html');
+        });
+        it('handle optional params', function () {
+            var path = router.makePath('article', {
+                site: 'SITE',
+                category: 'CATEGORY',
+                alias: 'ALIAS.html'
             });
+            expect(path).to.equal('/SITE/CATEGORY/ALIAS.html');
+            path = router.makePath('article', {
+                site: 'SITE',
+                alias: 'ALIAS.html'
+            });
+            expect(path).to.equal('/SITE/ALIAS.html');
+        });
+        it('handle custom match params', function () {
+            var path = router.makePath('custom_match_params', {
+                id: '12345'
+            });
+            expect(path).to.equal('/posts/12345');
+            path = router.makePath('custom_match_params', {
+                id: '12345abc'
+            });
+            expect(path).to.equal(null);
+        });
+        it('handle unamed params', function () {
+            var path = router.makePath('unamed_params', {
+                foo: 'foo',
+                0: 'bar'
+            });
+            expect(path).to.equal('/foo/bar');
+        });
+        it('handle query params', function () {
+            var path = router.makePath('unamed_params', {
+                foo: 'foo',
+                0: 'bar'
+            }, {
+                foo: 'bar',
+                baz: 'foo'
+            });
+            expect(path).to.equal('/foo/bar?baz=foo&foo=bar');
+        });
+        it('non-existing route', function () {
+            var path = router.makePath('article_does_not_exist', {
+                site: 'SITE',
+                category: 'CATEGORY',
+                subcategory: 'SUBCATEGORY',
+                alias: 'ALIAS.html'
+            });
+            expect(path).to.equal(null);
+        });
+        it('array route', function () {
+            var path = router.makePath('array_path', {});
+            expect(path).to.equal('/array_path');
+        });
+        it('invalid route', function () {
+            var path = router.makePath('invalid_path', {});
+            expect(path).to.equal(null);
         });
     });
 
@@ -402,7 +445,7 @@ describe('Router', function () {
 
 describe('Route', function () {
     it('match', function () {
-        router = new Router(routesObject);
+        var router = new Router(routesObject);
         var homeRoute = router._routes.home;
         expect(homeRoute.match()).to.equal(null, 'empty path returns null');
     });
