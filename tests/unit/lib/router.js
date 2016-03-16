@@ -7,6 +7,7 @@
 
 var expect = require('chai').expect;
 var Router = require('../../../lib/router');
+var sinon = require('sinon');
 var routesObject = {
     article: {
         path: '/:site/:category?/:subcategory?/:alias',
@@ -358,6 +359,44 @@ describe('Router', function () {
                 }
             ]);
         }).to.throw(Error);
+    });
+
+    it('should allow custom query string library', function () {
+        var queryLib = {
+            parse: sinon.spy(function (queryString) {
+                return queryString.split('&').reduce(function (a, v) {
+                    var split = v.split('=');
+                    a[split[0]] = split[1] || null;
+                    return a;
+                }, {});
+            }),
+            stringify: sinon.spy(function (queryObject) {
+                return Object.keys(queryObject).map(function (key) {
+                    return key + '=' + queryObject[key];
+                }).join('&');
+            })
+        };
+        var router = new Router([
+            {
+                name: 'home',
+                path: '/',
+                method: 'get'
+            }
+        ], {
+            queryLib: queryLib
+        });
+        var matched = router.getRoute('/?foo=bar&bar=baz');
+        expect(queryLib.parse.called).to.equal(true);
+        expect(matched.query).to.deep.equal({
+            foo: 'bar',
+            bar: 'baz'
+        });
+        var stringified = router.makePath('home', {}, {
+            foo: 'bar',
+            bar: 'baz'
+        });
+        expect(queryLib.stringify.called).to.equal(true);
+        expect(stringified).to.equal('/?foo=bar&bar=baz');
     });
 });
 
