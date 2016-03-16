@@ -9,8 +9,8 @@
   },
   "scripts": {
     "cover": "node node_modules/istanbul/lib/cli.js cover --dir artifacts -- ./node_modules/mocha/bin/_mocha tests/unit/ --recursive --reporter spec",
-    "lint": "./node_modules/.bin/jshint lib tests",
-    "test": "./node_modules/.bin/mocha tests/unit/ --recursive --compilers js:babel-register --require babel-polyfill --reporter spec"
+    "lint": "eslint .",
+    "test": "mocha tests/unit/ --recursive --compilers js:babel-register --require babel-polyfill --reporter spec"
   },
   "author": "Lingyan Zhu <lingyan@yahoo-inc.com",
   "licenses": [
@@ -25,15 +25,17 @@
     "query-string": "^3.0.1"
   },
   "devDependencies": {
+    "babel-eslint": "^5.0.0",
     "babel-polyfill": "^6.7.2",
     "babel-preset-es2015": "^6.6.0",
     "babel-register": "^6.7.2",
-    "chai": "^2.0.0",
+    "chai": "^3.2.0",
     "coveralls": "^2.11.1",
+    "eslint": "~2.2.0",
+    "eslint-plugin-babel": "^3.1.0",
     "istanbul": "^0.3.2",
-    "jshint": "^2.5.1",
     "mocha": "^2.0.1",
-    "precommit-hook": "^2.0.1",
+    "pre-commit": "^1.0.7",
     "sinon": "^1.17.3"
   },
   "jshintConfig": {

@@ -3,7 +3,7 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 /*globals describe,it,beforeEach,process */
-"use strict";
+'use strict';
 
 var expect = require('chai').expect;
 var Router = require('../../../lib/router');
@@ -174,22 +174,22 @@ describe('Router', function () {
                     expect(homeRoute.regexp).to.be.a('RegExp');
                     expect(function () {
                         frozen._routes.foo = 'abc';
-                    }).to.throw(TypeError);
+                    }).to['throw'](TypeError);
                     expect(function () {
                         homeRoute.name = 'unfreeze!';
-                    }).to.throw(TypeError);
+                    }).to['throw'](TypeError);
                     expect(function () {
                         homeRoute.config.method = 'unfreeze!';
-                    }).to.throw(TypeError);
+                    }).to['throw'](TypeError);
                     expect(function () {
                         homeRoute.config.page = 'unfreeze!';
-                    }).to.throw(TypeError);
+                    }).to['throw'](TypeError);
                     expect(function () {
                         homeRoute.keys[0] = 'unfreeze!';
-                    }).to.throw(TypeError);
+                    }).to['throw'](TypeError);
                     expect(function () {
                         homeRoute.config.regexp = null;
-                    }).to.throw(TypeError);
+                    }).to['throw'](TypeError);
                     expect(Object.keys(frozen._routes).length).to.equal(routesArray.length);
                     expect(frozen._routes.foo).to.equal(undefined);
                     expect(homeRoute.keys.length).to.equal(0);
@@ -390,7 +390,7 @@ describe('Router', function () {
                     path: '/'
                 }
             ]);
-        }).to.throw(Error);
+        }).to['throw'](Error);
     });
 
     it('should throw if there are routes with duplicate name', function () {
@@ -405,7 +405,7 @@ describe('Router', function () {
                     path: '/home'
                 }
             ]);
-        }).to.throw(Error);
+        }).to['throw'](Error);
     });
 
     it('should allow custom query string library', function () {
