@@ -71,6 +71,9 @@ var routesObject = {
     },
     invalid_path: {
         path: 123
+    },
+    json_value: {
+        path: '/path/with/some/json_value/:json'
     }
 };
 var routesArray = Object.keys(routesObject).map(function (routeName) {
@@ -78,6 +81,7 @@ var routesArray = Object.keys(routesObject).map(function (routeName) {
         name: routeName
     });
 });
+var encodingConsistencyPath = '/path/with/some/json_value/%7B%22keyword%22%3A%22foo%22%7D';
 
 describe('Router', function () {
     [routesObject, routesArray].forEach(function (routes, key) {
@@ -284,6 +288,10 @@ describe('Router', function () {
             var route = router.getRoute('/array/path/with/collision/bar/abc');
             expect(route.params.key).to.equal('abc');
         });
+        it('route with json string in param with consistency', function () {
+            var route = router.getRoute(encodingConsistencyPath);
+            expect(route.params.json).to.equal('{"keyword":"foo"}');
+        });
 
         it('should allow route to match multiple methods', function () {
             var route = 'multi_methods';
@@ -380,6 +388,12 @@ describe('Router', function () {
         it('invalid route', function () {
             var path = router.makePath('invalid_path', {});
             expect(path).to.equal(null);
+        });
+        it('path with some json value and consistency', function () {
+            var path = router.makePath('json_value', {
+                json: JSON.stringify({keyword: 'foo'})
+            });
+            expect(path).to.equal(encodingConsistencyPath);
         });
     });
 
