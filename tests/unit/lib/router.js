@@ -364,6 +364,13 @@ describe('Router', function () {
             });
             expect(path).to.equal('/foo/bar?baz=foo&foo=bar');
         });
+        it('adds no question mark with empty query', function () {
+            var path = router.makePath('unamed_params', {
+                foo: 'foo',
+                0: 'bar'
+            }, {/* empty object */});
+            expect(path).to.equal('/foo/bar');
+        });
         it('non-existing route', function () {
             var path = router.makePath('article_does_not_exist', {
                 site: 'SITE',
