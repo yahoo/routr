@@ -1,19 +1,25 @@
 # Change Log
 
+## 2.0.0
+
+### Breaking Changes
+
+ * [#33] `getRoute` will now `decodeURIComponent` route values, you might need to remove `decodeURIComponent` from your route actions if you were supporting extended characters manually in your routes.
+
 ## 1.0.0
 
 ### Breaking Changes
 
  * [#29] `navigate` is no longer used as part of `router.getRoute` options
  * [#29] `route.navigate` has been removed from the matched route object
- 
+
 ### Features
 
- * [#30] Route definitions should now be defined as an array of route objects 
+ * [#30] Route definitions should now be defined as an array of route objects
  rather than a map of routes. The old method of defining routes with a map
  is still supported, but ordering can not be guaranteed (as per the JavaScript
  engine's implementation).
- * [#31] Added support for parsing and constructing urls with query strings. 
+ * [#31] Added support for parsing and constructing urls with query strings.
  Matched route objects now contain a `query` property containing the map of
  query parameters. `router.makePath` now accepts a third `query` parameter
  which is a map of query parameters to add to the resulting URL string. e.g.
