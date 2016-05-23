@@ -474,5 +474,12 @@ describe('Route', function () {
         var homeRoute = router._routes.home;
         expect(homeRoute.match()).to.equal(null, 'empty path returns null');
     });
+    it('should leave unset optional parameters as undefined', function(){
+        var router = new Router(routesObject);
+        var article = router._routes.article;
+        var result = article.match('/site/alias');
+        expect(result.route.category).to.be.undefined;
+        expect(result.route.subcategory).to.be.undefined;
+    });
 });
 
