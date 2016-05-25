@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.1
+
+ * [#35] Fix decodeURIComponent of undefined bug
+
 ## 2.0.0
 
 ### Breaking Changes
