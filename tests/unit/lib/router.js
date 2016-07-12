@@ -292,6 +292,13 @@ describe('Router', function () {
             var route = router.getRoute(encodingConsistencyPath);
             expect(route.params.json).to.equal('{"keyword":"foo"}');
         });
+        it('should handle a hash fragment with a question-mark', function () {
+            var route = router.getRoute('/finance/news/test.html#?', {method: 'get'});
+            expect(route.name).to.equal('article');
+            expect(route.params.site).to.equal('finance');
+            expect(route.params.category).to.equal('news');
+            expect(route.params.alias).to.equal('test.html');
+        });
 
         it('should allow route to match multiple methods', function () {
             var route = 'multi_methods';
