@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.1.0
+
+ * [#37] Enhance makePath for routes with path array
+
+## 2.0.2
+
+ * [#36] Bug fix: Add support for question marks in hash fragments
+
 ## 2.0.1
 
  * [#35] Fix decodeURIComponent of undefined bug
