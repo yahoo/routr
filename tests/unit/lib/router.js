@@ -304,7 +304,7 @@ describe('Router', function () {
             var routeFoo = router.getRoute(arrayPathWithDifferentPropsFoo);
             expect(routeFoo.params.foo).to.equal('foo');
             var routeBar = router.getRoute(arrayPathWithDifferentPropsBar);
-            expect(routeBar.params.foo).to.equal('bar');
+            expect(routeBar.params.bar).to.equal('bar');
         });
         it('should handle a hash fragment with a question-mark', function () {
             var route = router.getRoute('/finance/news/test.html#?', {method: 'get'});
@@ -425,11 +425,11 @@ describe('Router', function () {
         });
         it('array path with different props', function () {
             var pathFoo = router.makePath('array_path_with_different_props', {
-                foo: "foo"
+                foo: 'foo'
             });
             expect(pathFoo).to.equal(arrayPathWithDifferentPropsFoo);
             var pathBar = router.makePath('array_path_with_different_props', {
-                bar: "bar"
+                bar: 'bar'
             });
             expect(pathBar).to.equal(arrayPathWithDifferentPropsBar);
             var pathInvalid = router.makePath('array_path_with_different_props', {});
