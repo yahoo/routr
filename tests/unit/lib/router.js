@@ -89,7 +89,7 @@ var routesArray = Object.keys(routesObject).map(function (routeName) {
 });
 var encodingConsistencyPath = '/path/with/some/json_value/%7B%22keyword%22%3A%22foo%22%7D';
 var arrayPathWithDifferentPropsFoo = '/array/path/with/different/props/foo/foo';
-var arrayPathWithDifferentPropsBar = '/array/path/with/different/props/foo/bar';
+var arrayPathWithDifferentPropsBar = '/array/path/with/different/props/bar/bar';
 
 describe('Router', function () {
     [routesObject, routesArray].forEach(function (routes, key) {
