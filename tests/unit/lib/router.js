@@ -69,6 +69,12 @@ var routesObject = {
         method: 'GET',
         page: 'arrayPathNameCollision'
     },
+    array_path_with_different_props: {
+        path: [
+            '/array/path/with/different/props/foo/:foo',
+            '/array/path/with/different/props/bar/:bar'
+        ]
+    },
     invalid_path: {
         path: 123
     },
@@ -82,6 +88,8 @@ var routesArray = Object.keys(routesObject).map(function (routeName) {
     });
 });
 var encodingConsistencyPath = '/path/with/some/json_value/%7B%22keyword%22%3A%22foo%22%7D';
+var arrayPathWithDifferentPropsFoo = '/array/path/with/different/props/foo/foo';
+var arrayPathWithDifferentPropsBar = '/array/path/with/different/props/foo/bar';
 
 describe('Router', function () {
     [routesObject, routesArray].forEach(function (routes, key) {
@@ -292,6 +300,12 @@ describe('Router', function () {
             var route = router.getRoute(encodingConsistencyPath);
             expect(route.params.json).to.equal('{"keyword":"foo"}');
         });
+        it('route with array path with different props', function () {
+            var routeFoo = router.getRoute(arrayPathWithDifferentPropsFoo);
+            expect(routeFoo.params.foo).to.equal('foo');
+            var routeBar = router.getRoute(arrayPathWithDifferentPropsBar);
+            expect(routeBar.params.foo).to.equal('bar');
+        });
         it('should handle a hash fragment with a question-mark', function () {
             var route = router.getRoute('/finance/news/test.html#?', {method: 'get'});
             expect(route.name).to.equal('article');
@@ -408,6 +422,18 @@ describe('Router', function () {
                 json: JSON.stringify({keyword: 'foo'})
             });
             expect(path).to.equal(encodingConsistencyPath);
+        });
+        it('array path with different props', function () {
+            var pathFoo = router.makePath('array_path_with_different_props', {
+                foo: "foo"
+            });
+            expect(pathFoo).to.equal(arrayPathWithDifferentPropsFoo);
+            var pathBar = router.makePath('array_path_with_different_props', {
+                bar: "bar"
+            });
+            expect(pathBar).to.equal(arrayPathWithDifferentPropsBar);
+            var pathInvalid = router.makePath('array_path_with_different_props', {});
+            expect(pathInvalid).to.equal(null);
         });
     });
 
