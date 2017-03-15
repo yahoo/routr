@@ -20,7 +20,7 @@
     }
   ],
   "dependencies": {
-    "debug": "^2.0.0",
+    "debug": "^2.4.0",
     "path-to-regexp": "^1.1.1",
     "query-string": "^4.2.3"
   },
