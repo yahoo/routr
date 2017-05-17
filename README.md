@@ -1,5 +1,7 @@
 # Routr 
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/yahoo/routr.svg)](https://greenkeeper.io/)
+
 [![npm version](https://badge.fury.io/js/routr.svg)](http://badge.fury.io/js/routr)
 [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr)
 [![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr)
