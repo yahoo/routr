@@ -31,7 +31,7 @@
     "babel-register": "^6.14.0",
     "chai": "^4.0.1",
     "coveralls": "^2.11.1",
-    "eslint": "^3.4.0",
+    "eslint": "^4.1.0",
     "eslint-plugin-babel": "^4.0.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
