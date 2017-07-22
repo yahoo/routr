@@ -22,7 +22,7 @@
   "dependencies": {
     "debug": "^2.0.0",
     "path-to-regexp": "^1.1.1",
-    "query-string": "^4.2.3"
+    "query-string": "^5.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
