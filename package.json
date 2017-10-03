@@ -34,7 +34,7 @@
     "eslint": "^4.1.0",
     "eslint-plugin-babel": "^4.0.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.0.2",
+    "mocha": "^4.0.0",
     "pre-commit": "^1.0.7",
     "sinon": "^4.0.0"
   },
