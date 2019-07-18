@@ -10,7 +10,7 @@
   "scripts": {
     "cover": "node node_modules/istanbul/lib/cli.js cover --dir artifacts -- ./node_modules/mocha/bin/_mocha tests/unit/ --recursive --reporter spec",
     "lint": "eslint .",
-    "test": "mocha tests/unit/ --recursive --compilers js:babel-register --require babel-polyfill --reporter spec"
+    "test": "mocha tests/unit/ --recursive --require babel-register --require babel-polyfill --reporter spec"
   },
   "author": "Lingyan Zhu <lingyan@yahoo-inc.com",
   "licenses": [
