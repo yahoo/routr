@@ -1,3 +1,5 @@
+/.github/
 /artifacts/
 /examples/
 /tests/
+eslintrc.js
