@@ -33,7 +33,7 @@
     "eslint": "^7.29.0",
     "eslint-plugin-babel": "^5.0.0",
     "istanbul": "^0.4.5",
-    "mocha": "^7.0.1",
+    "mocha": "^9.0.1",
     "pre-commit": "^1.0.7",
     "sinon": "^8.0.0"
   },
