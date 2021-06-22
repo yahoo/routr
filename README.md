@@ -2,8 +2,6 @@
 
 [![npm version](https://badge.fury.io/js/routr.svg)](http://badge.fury.io/js/routr)
 [![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr)
-[![Dependency Status](https://david-dm.org/yahoo/routr.svg)](https://david-dm.org/yahoo/routr)
-[![devDependency Status](https://david-dm.org/yahoo/routr/dev-status.svg)](https://david-dm.org/yahoo/routr#info=devDependencies)
 [![Coverage Status](https://img.shields.io/coveralls/yahoo/routr.svg)](https://coveralls.io/r/yahoo/routr?branch=master)
 
 
@@ -14,9 +12,9 @@ Routr library is an implementation of router-related functionalities that can be
 For more detailed examples, please check out [example applications](https://github.com/yahoo/routr/tree/master/examples);
 
 ```javascript
-var Router = require('routr');
+import Router from 'routr';
 
-var router = new Router([
+const router = new Router([
     {
         name: 'view_user',
         path: '/user/:id',
@@ -33,7 +31,7 @@ var router = new Router([
 ]);
 
 // match route
-var route = router.getRoute('/user/garfield?foo=bar');
+const route = router.getRoute('/user/garfield?foo=bar');
 if (route) {
     // this will output:
     //   - "view_user" for route.name
@@ -46,7 +44,7 @@ if (route) {
 
 // generate path name (does not include query string) from route
 // "path" will be "/user/garfield/post/favoriteFood?meal=breakfast"
-var path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'}, { meal: 'breakfast' });
+const path = router.makePath('view_user_post', {id: 'garfield', post: 'favoriteFood'}, { meal: 'breakfast' });
 
 ```
 
