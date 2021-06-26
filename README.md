@@ -1,7 +1,7 @@
 # Routr 
 
 [![npm version](https://badge.fury.io/js/routr.svg)](http://badge.fury.io/js/routr)
-[![Build Status](https://travis-ci.org/yahoo/routr.svg?branch=master)](https://travis-ci.org/yahoo/routr)
+![github actions](https://github.com/yahoo/routr/actions/workflows/node.js.yml/badge.svg)
 [![Coverage Status](https://img.shields.io/coveralls/yahoo/routr.svg)](https://coveralls.io/r/yahoo/routr?branch=master)
 
 
