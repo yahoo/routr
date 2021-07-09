@@ -2,7 +2,7 @@
  * Copyright 2014, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-/*globals describe,it,beforeEach,process */
+/*globals describe,it,beforeEach */
 'use strict';
 
 var expect = require('chai').expect;
@@ -19,7 +19,7 @@ var routesObject = {
         method: 'get',
         navigate: {
             params: {
-                id: /^\w{4}\-\w{3}$/,
+                id: /^\w{4}-\w{3}$/,
                 foo: 'bar'
             }
         },
