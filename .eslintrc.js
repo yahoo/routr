@@ -2,7 +2,7 @@ module.exports = {
     env: {
         node: true,
     },
-    extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+    extends: ['eslint:recommended'],
     parser: 'babel-eslint',
     rules: {
         indent: [2, 4, { SwitchCase: 1 }],
