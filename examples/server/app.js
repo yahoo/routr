@@ -14,23 +14,30 @@ router = new Router({
         path: '/user/:id',
         method: 'get',
         foo: {
-            bar: 'baz'
-        }
+            bar: 'baz',
+        },
     },
     view_user_post: {
         path: '/user/:id/post/:post',
-        method: 'get'
+        method: 'get',
     },
     edit_user: {
         path: '/user/:id',
-        method: 'put'
-    }
+        method: 'put',
+    },
 });
 
 app.all('*', function (req, res) {
-    var route = router.getRoute(req.url, {method: req.method});
+    var route = router.getRoute(req.url, { method: req.method });
     if (route) {
-        res.send('[Route found] name=' + route.name + ' params = ' + util.inspect(route.params) + ' config = ' + util.inspect(route.config));
+        res.send(
+            '[Route found] name=' +
+                route.name +
+                ' params = ' +
+                util.inspect(route.params) +
+                ' config = ' +
+                util.inspect(route.config)
+        );
     } else {
         res.send(404, '[Route not found]');
     }
