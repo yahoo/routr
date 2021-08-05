@@ -1,5 +1,20 @@
 # Change Log
 
+## 3.0.0
+
+### Breaking Changes
+
+-   `routr` uses native `URLSearchParams` instead of `query-string`
+    library internally. If you need to support old browsers, you can
+    either add a `URLSearchParams` polyfill or inject `query-string`
+    when instantiating `routr`:
+
+```js
+router = new Routr(routes, {
+    queryLib: require('query-string'),
+});
+```
+
 ## 2.1.0
 
 -   [#37] Enhance makePath for routes with path array

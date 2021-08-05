@@ -22,8 +22,7 @@
     }
   ],
   "dependencies": {
-    "path-to-regexp": "^1.1.1",
-    "query-string": "^5.0.0"
+    "path-to-regexp": "^1.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
