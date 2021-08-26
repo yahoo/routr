@@ -8,6 +8,7 @@
     library internally. If you need to support old browsers, you can
     either add a `URLSearchParams` polyfill or inject `query-string`
     when instantiating `routr`:
+-   [#113] Updated `path-to-regexp` to its latest version
 
 ```js
 router = new Routr(routes, {
