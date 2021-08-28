@@ -1,18 +1,21 @@
 # Change Log
 
+## 3.0.1
+
+-   [#114] fix handling of array like query params
+
 ## 3.0.0
 
 ### Breaking Changes
 
--   `routr` uses native `URLSearchParams` instead of `query-string`
-    library internally. If you need to support old browsers, you can
-    either add a `URLSearchParams` polyfill or inject `query-string`
-    when instantiating `routr`:
+-   [#110] `routr` uses native `URLSearchParams` instead of `query-string` to parse query strings. As a consequence, parsing `?foo` will result in `{ foo: '' }` as specified in the [WHATWG spec](https://url.spec.whatwg.org/#interface-urlsearchparams) instead of `{ foo: null }` as `query-string` would do. Also, `URLSearchParams` is not available in older browsers (noticeably IE11). If you need to support them, you can either add a `URLSearchParams` polyfill or inject `query-string` when instantiating `routr`:
+
 ```js
 router = new Routr(routes, {
     queryLib: require('query-string'),
 });
 ```
+
 -   [#113] Updated `path-to-regexp` to its latest version
 
 ## 2.1.0
@@ -43,9 +46,9 @@ router = new Routr(routes, {
 ### Features
 
 -   [#30] Route definitions should now be defined as an array of route objects
-    rather than a map of routes. The old method of defining routes with a map
-    is still supported, but ordering can not be guaranteed (as per the JavaScript
-    engine's implementation).
+    rather than a map of routes. The old method of defining routes
+    with a map is still supported, but ordering can not be guaranteed
+    (as per the JavaScript engine's implementation).
 -   [#31] Added support for parsing and constructing urls with query strings.
     Matched route objects now contain a `query` property containing the map of
     query parameters. `router.makePath` now accepts a third `query` parameter
