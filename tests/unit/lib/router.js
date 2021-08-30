@@ -370,6 +370,15 @@ describe('Router', function () {
             expect(route.query).to.deep.equal({ foo: 'bar' });
         });
 
+        it('can parse query params correctly', () => {
+            const route = router.getRoute('/?foo=bar&a=b&a=c&bool');
+            expect(route.query).to.deep.equal({
+                foo: 'bar',
+                a: ['b', 'c'],
+                bool: '',
+            });
+        });
+
         it('method should be case-insensitive and defaults to get', function () {
             var route = router.getRoute(
                 '/finance/news/e-t-initially-horror-film-202700630.html'
@@ -476,9 +485,11 @@ describe('Router', function () {
 
     describe('#makePath', function () {
         var router;
+
         beforeEach(function () {
             router = new Router(routesArray);
         });
+
         it('existing route', function () {
             var path = router.makePath('article', {
                 site: 'SITE',
@@ -488,6 +499,7 @@ describe('Router', function () {
             });
             expect(path).to.equal('/SITE/CATEGORY/SUBCATEGORY/ALIAS.html');
         });
+
         it('handle optional params', function () {
             var path = router.makePath('article', {
                 site: 'SITE',
@@ -501,6 +513,7 @@ describe('Router', function () {
             });
             expect(path).to.equal('/SITE/ALIAS.html');
         });
+
         it('handle custom match params', function () {
             var path = router.makePath('custom_match_params', {
                 id: '12345',
@@ -511,6 +524,7 @@ describe('Router', function () {
             });
             expect(path).to.equal(null);
         });
+
         it('handle unamed params', function () {
             var path = router.makePath('unamed_params', {
                 foo: 'foo',
@@ -518,20 +532,28 @@ describe('Router', function () {
             });
             expect(path).to.equal('/foo/bar');
         });
-        it('handle query params', function () {
+
+        it('can build query params correctly', function () {
             var path = router.makePath(
-                'unamed_params',
+                'home',
+                {},
                 {
-                    foo: 'foo',
-                    0: 'bar',
-                },
-                {
-                    foo: 'bar',
-                    baz: 'foo',
+                    c: '42',
+                    a: 'bar',
+                    b: ['1', '2', '3'],
                 }
             );
-            expect(path).to.equal('/foo/bar?baz=foo&foo=bar');
+            expect(path).to.equal('/?a=bar&b=1&b=2&b=3&c=42');
         });
+
+        it('handle query params properly', function () {
+            const originalPath = '/?a=bar&b=42&b=24&c=';
+            const route = router.getRoute(originalPath);
+            const path = router.makePath(route.name, route.params, route.query);
+
+            expect(path).to.equal(originalPath);
+        });
+
         it('adds no question mark with empty query', function () {
             var path = router.makePath(
                 'unamed_params',
@@ -545,6 +567,7 @@ describe('Router', function () {
             );
             expect(path).to.equal('/foo/bar');
         });
+
         it('non-existing route', function () {
             var path = router.makePath('article_does_not_exist', {
                 site: 'SITE',
@@ -554,20 +577,24 @@ describe('Router', function () {
             });
             expect(path).to.equal(null);
         });
+
         it('array route', function () {
             var path = router.makePath('array_path', {});
             expect(path).to.equal('/array_path');
         });
+
         it('invalid route', function () {
             var path = router.makePath('invalid_path', {});
             expect(path).to.equal(null);
         });
+
         it('path with some json value and consistency', function () {
             var path = router.makePath('json_value', {
                 json: JSON.stringify({ keyword: 'foo' }),
             });
             expect(path).to.equal(encodingConsistencyPath);
         });
+
         it('array path with different props', function () {
             var pathFoo = router.makePath('array_path_with_different_props', {
                 foo: 'foo',
@@ -664,6 +691,7 @@ describe('Route', function () {
         var homeRoute = router._routes.home;
         expect(homeRoute.match()).to.equal(null, 'empty path returns null');
     });
+
     it('should leave unset optional parameters as undefined', function () {
         var router = new Router(routesObject);
         var article = router._routes.article;
