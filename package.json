@@ -1,6 +1,6 @@
 {
   "name": "routr",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A router for both server and client",
   "main": "index.js",
   "repository": {
