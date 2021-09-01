@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . && npm run format:check",
-    "test": "mocha tests/unit/ --recursive --require babel-register --require babel-polyfill --reporter spec"
+    "test": "mocha tests/unit/ --recursive --reporter spec"
   },
   "author": "Lingyan Zhu <lingyan@yahoo-inc.com",
   "licenses": [
@@ -25,14 +25,9 @@
     "path-to-regexp": "^6.2.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.2",
-    "babel-polyfill": "^6.13.0",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-register": "^6.14.0",
     "chai": "^4.0.1",
     "coveralls": "^3.0.0",
     "eslint": "^7.29.0",
-    "eslint-plugin-babel": "^5.0.0",
     "istanbul": "^0.4.5",
     "mocha": "^9.0.1",
     "pre-commit": "^1.0.7",
