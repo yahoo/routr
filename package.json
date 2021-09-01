@@ -29,8 +29,7 @@
     "eslint": "^7.29.0",
     "jest": "^27.1.0",
     "pre-commit": "^1.0.7",
-    "prettier": "^2.3.2",
-    "sinon": "^11.1.1"
+    "prettier": "^2.3.2"
   },
   "pre-commit": [
     "lint",

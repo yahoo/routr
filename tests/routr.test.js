@@ -5,7 +5,7 @@
 'use strict';
 
 var Router = require('../lib/router');
-var sinon = require('sinon');
+
 var routesObject = {
     article: {
         path: '/:site/:category?/:subcategory?/:alias',
@@ -633,14 +633,14 @@ describe('Router', function () {
 
     it('should allow custom query string library', function () {
         var queryLib = {
-            parse: sinon.spy(function (queryString) {
+            parse: jest.fn().mockImplementation(function (queryString) {
                 return queryString.split('&').reduce(function (a, v) {
                     var split = v.split('=');
                     a[split[0]] = split[1] || null;
                     return a;
                 }, {});
             }),
-            stringify: sinon.spy(function (queryObject) {
+            stringify: jest.fn().mockImplementation(function (queryObject) {
                 return Object.keys(queryObject)
                     .map(function (key) {
                         return key + '=' + queryObject[key];
@@ -661,7 +661,7 @@ describe('Router', function () {
             }
         );
         var matched = router.getRoute('/?foo=bar&bar=baz');
-        expect(queryLib.parse.called).toBe(true);
+        expect(queryLib.parse).toHaveBeenCalled();
         expect(matched.query).toEqual({
             foo: 'bar',
             bar: 'baz',
@@ -674,7 +674,7 @@ describe('Router', function () {
                 bar: 'baz',
             }
         );
-        expect(queryLib.stringify.called).toBe(true);
+        expect(queryLib.stringify).toHaveBeenCalled();
         expect(stringified).toEqual('/?foo=bar&bar=baz');
     });
 });
