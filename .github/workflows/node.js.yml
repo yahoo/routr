@@ -22,4 +22,8 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - run: npm ci
             - run: npm run lint
-            - run: npm test
+            - run: npm run test:cov
+            - name: Coveralls
+              uses: coverallsapp/github-action@1.1.3
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
