@@ -4,7 +4,6 @@
  */
 'use strict';
 
-var expect = require('chai').expect;
 var Router = require('../lib/router');
 var sinon = require('sinon');
 var routesObject = {
@@ -102,125 +101,127 @@ describe('Router', function () {
 
             describe('#constructor', function () {
                 it('should init correctly', function () {
-                    expect(Object.keys(router._routes).length).to.equal(
+                    expect(Object.keys(router._routes).length).toEqual(
                         routesArray.length
                     );
 
-                    expect(router._routes.article.name).to.equal('article');
-                    expect(router._routes.article.config.path).to.equal(
+                    expect(router._routes.article.name).toEqual('article');
+                    expect(router._routes.article.config.path).toEqual(
                         '/:site/:category?/:subcategory?/:alias'
                     );
-                    expect(router._routes.article.config.method).to.equal(
-                        'get'
-                    );
-                    expect(router._routes.article.config.page).to.equal(
+                    expect(router._routes.article.config.method).toEqual('get');
+                    expect(router._routes.article.config.page).toEqual(
                         'viewArticle'
                     );
-                    expect(router._routes.article.config.navigate).to.equal(
+                    expect(router._routes.article.config.navigate).toBe(
                         undefined
                     );
-                    expect(router._routes.article.keys.length).to.equal(4);
-                    expect(router._routes.article.keys[0].name).to.equal(
-                        'site'
-                    );
-                    expect(router._routes.article.keys[1].name).to.equal(
+                    expect(router._routes.article.keys.length).toEqual(4);
+                    expect(router._routes.article.keys[0].name).toEqual('site');
+                    expect(router._routes.article.keys[1].name).toEqual(
                         'category'
                     );
-                    expect(router._routes.article.keys[2].name).to.equal(
+                    expect(router._routes.article.keys[2].name).toEqual(
                         'subcategory'
                     );
-                    expect(router._routes.article.keys[3].name).to.equal(
+                    expect(router._routes.article.keys[3].name).toEqual(
                         'alias'
                     );
-                    expect(router._routes.article.regexp).to.be.a('RegExp');
+                    expect(router._routes.article.regexp).toBeInstanceOf(
+                        RegExp
+                    );
 
-                    expect(router._routes.offnetwork_article.name).to.equal(
+                    expect(router._routes.offnetwork_article.name).toEqual(
                         'offnetwork_article'
                     );
                     expect(
                         router._routes.offnetwork_article.config.path
-                    ).to.equal('/');
+                    ).toEqual('/');
                     expect(
                         router._routes.offnetwork_article.config.method
-                    ).to.equal('get');
+                    ).toEqual('get');
                     expect(
                         router._routes.offnetwork_article.config.page
-                    ).to.equal('viewArticle');
+                    ).toEqual('viewArticle');
                     expect(
                         router._routes.offnetwork_article.config.navigate.params
-                    ).to.be.a('object');
+                    ).toBeInstanceOf(Object);
                     expect(
                         router._routes.offnetwork_article.config.navigate.params
                             .id
-                    ).to.be.a('RegExp');
+                    ).toBeInstanceOf(RegExp);
                     expect(
                         router._routes.offnetwork_article.keys.length
-                    ).to.equal(0);
-                    expect(router._routes.offnetwork_article.regexp).to.be.a(
-                        'RegExp'
-                    );
+                    ).toEqual(0);
+                    expect(
+                        router._routes.offnetwork_article.regexp
+                    ).toBeInstanceOf(RegExp);
 
-                    expect(router._routes.home.name).to.equal('home');
-                    expect(router._routes.home.config.path).to.equal('/');
-                    expect(router._routes.home.config.method).to.equal('get');
-                    expect(router._routes.home.config.page).to.equal(
+                    expect(router._routes.home.name).toEqual('home');
+                    expect(router._routes.home.config.path).toEqual('/');
+                    expect(router._routes.home.config.method).toEqual('get');
+                    expect(router._routes.home.config.page).toEqual(
                         'viewHomepage'
                     );
-                    expect(router._routes.home.keys.length).to.equal(0);
-                    expect(router._routes.home.regexp).to.be.a('RegExp');
+                    expect(router._routes.home.keys.length).toEqual(0);
+                    expect(router._routes.home.regexp).toBeInstanceOf(RegExp);
 
-                    expect(router._routes.new_article.name).to.equal(
+                    expect(router._routes.new_article.name).toEqual(
                         'new_article'
                     );
-                    expect(router._routes.new_article.config.path).to.equal(
+                    expect(router._routes.new_article.config.path).toEqual(
                         '/new_article'
                     );
-                    expect(router._routes.new_article.config.method).to.equal(
+                    expect(router._routes.new_article.config.method).toEqual(
                         'post'
                     );
-                    expect(router._routes.new_article.config.page).to.equal(
+                    expect(router._routes.new_article.config.page).toEqual(
                         'createArticle'
                     );
-                    expect(router._routes.new_article.keys.length).to.equal(0);
-                    expect(router._routes.new_article.regexp).to.be.a('RegExp');
+                    expect(router._routes.new_article.keys.length).toEqual(0);
+                    expect(router._routes.new_article.regexp).toBeInstanceOf(
+                        RegExp
+                    );
 
-                    expect(router._routes.case_insensitive.name).to.equal(
+                    expect(router._routes.case_insensitive.name).toEqual(
                         'case_insensitive'
                     );
-                    expect(
-                        router._routes.case_insensitive.config.path
-                    ).to.equal('/case_insensitive');
+                    expect(router._routes.case_insensitive.config.path).toEqual(
+                        '/case_insensitive'
+                    );
                     expect(
                         router._routes.case_insensitive.config.method
-                    ).to.equal('GET');
-                    expect(
-                        router._routes.case_insensitive.config.page
-                    ).to.equal('viewCaseInsensitive');
-                    expect(
-                        router._routes.case_insensitive.keys.length
-                    ).to.equal(0);
-                    expect(router._routes.case_insensitive.regexp).to.be.a(
-                        'RegExp'
+                    ).toEqual('GET');
+                    expect(router._routes.case_insensitive.config.page).toEqual(
+                        'viewCaseInsensitive'
                     );
+                    expect(router._routes.case_insensitive.keys.length).toEqual(
+                        0
+                    );
+                    expect(
+                        router._routes.case_insensitive.regexp
+                    ).toBeInstanceOf(RegExp);
 
-                    expect(router._routes.array_path.name).to.equal(
+                    expect(router._routes.array_path.name).toEqual(
                         'array_path'
                     );
-                    expect(router._routes.array_path.config.path[0]).to.equal(
+                    expect(router._routes.array_path.config.path[0]).toEqual(
                         '/array_path'
                     );
-                    expect(router._routes.array_path.keys.length).to.equal(0);
-                    expect(router._routes.array_path.regexp).to.be.a('RegExp');
+                    expect(router._routes.array_path.keys.length).toEqual(0);
+                    expect(router._routes.array_path.regexp).toBeInstanceOf(
+                        RegExp
+                    );
 
-                    expect(router._routes.invalid_path.name).to.equal(
+                    expect(router._routes.invalid_path.name).toEqual(
                         'invalid_path'
                     );
-                    expect(router._routes.invalid_path.config.path).to.equal(
+                    expect(router._routes.invalid_path.config.path).toEqual(
                         123
                     );
-                    expect(router._routes.invalid_path.keys.length).to.equal(0);
-                    expect(router._routes.invalid_path.regexp).to.be.a(
-                        'RegExp'
+                    expect(router._routes.invalid_path.keys.length).toEqual(0);
+                    expect(router._routes.invalid_path.regexp).toBeInstanceOf(
+                        RegExp
                     );
                 });
                 it('should not freeze in production env', function () {
@@ -228,19 +229,19 @@ describe('Router', function () {
                     process.env.NODE_ENV = 'production';
                     var notFrozen = new Router(routes);
 
-                    expect(Object.keys(notFrozen._routes).length).to.equal(
+                    expect(Object.keys(notFrozen._routes).length).toEqual(
                         routesArray.length
                     );
                     notFrozen._routes.foo = null;
-                    expect(notFrozen._routes.foo).to.equal(null);
-                    expect(Object.keys(notFrozen._routes).length).to.equal(
+                    expect(notFrozen._routes.foo).toBe(null);
+                    expect(Object.keys(notFrozen._routes).length).toEqual(
                         routesArray.length + 1
                     );
 
                     var homeRoute = notFrozen._routes.home;
-                    expect(homeRoute.name).to.equal('home');
+                    expect(homeRoute.name).toEqual('home');
                     homeRoute.name = 'changed';
-                    expect(homeRoute.name).to.equal('changed');
+                    expect(homeRoute.name).toEqual('changed');
                     process.env.NODE_ENV = origEnv;
                 });
                 it('should freeze in non-production env', function () {
@@ -248,44 +249,44 @@ describe('Router', function () {
                     process.env.NODE_ENV = 'development';
                     var frozen = new Router(routes);
                     var homeRoute = frozen._routes.home;
-                    expect(Object.keys(frozen._routes).length).to.equal(
+                    expect(Object.keys(frozen._routes).length).toEqual(
                         routesArray.length
                     );
-                    expect(homeRoute.name).to.equal('home');
-                    expect(homeRoute.config.path).to.equal('/');
-                    expect(homeRoute.config.method).to.equal('get');
-                    expect(homeRoute.config.page).to.equal('viewHomepage');
-                    expect(homeRoute.keys.length).to.equal(0);
-                    expect(homeRoute.regexp).to.be.a('RegExp');
+                    expect(homeRoute.name).toEqual('home');
+                    expect(homeRoute.config.path).toEqual('/');
+                    expect(homeRoute.config.method).toEqual('get');
+                    expect(homeRoute.config.page).toEqual('viewHomepage');
+                    expect(homeRoute.keys.length).toEqual(0);
+                    expect(homeRoute.regexp).toBeInstanceOf(RegExp);
                     expect(function () {
                         frozen._routes.foo = 'abc';
-                    }).to['throw'](TypeError);
+                    }).toThrow(TypeError);
                     expect(function () {
                         homeRoute.name = 'unfreeze!';
-                    }).to['throw'](TypeError);
+                    }).toThrow(TypeError);
                     expect(function () {
                         homeRoute.config.method = 'unfreeze!';
-                    }).to['throw'](TypeError);
+                    }).toThrow(TypeError);
                     expect(function () {
                         homeRoute.config.page = 'unfreeze!';
-                    }).to['throw'](TypeError);
+                    }).toThrow(TypeError);
                     expect(function () {
                         homeRoute.keys[0] = 'unfreeze!';
-                    }).to['throw'](TypeError);
+                    }).toThrow(TypeError);
                     expect(function () {
                         homeRoute.config.regexp = null;
-                    }).to['throw'](TypeError);
-                    expect(Object.keys(frozen._routes).length).to.equal(
+                    }).toThrow(TypeError);
+                    expect(Object.keys(frozen._routes).length).toEqual(
                         routesArray.length
                     );
-                    expect(frozen._routes.foo).to.equal(undefined);
-                    expect(homeRoute.keys.length).to.equal(0);
-                    expect(homeRoute.name).to.equal('home');
-                    expect(homeRoute.config.path).to.equal('/');
-                    expect(homeRoute.config.method).to.equal('get');
-                    expect(homeRoute.config.page).to.equal('viewHomepage');
-                    expect(homeRoute.keys.length).to.equal(0);
-                    expect(homeRoute.regexp).to.be.a('RegExp');
+                    expect(frozen._routes.foo).toBe(undefined);
+                    expect(homeRoute.keys.length).toEqual(0);
+                    expect(homeRoute.name).toEqual('home');
+                    expect(homeRoute.config.path).toEqual('/');
+                    expect(homeRoute.config.method).toEqual('get');
+                    expect(homeRoute.config.page).toEqual('viewHomepage');
+                    expect(homeRoute.keys.length).toEqual(0);
+                    expect(homeRoute.regexp).toBeInstanceOf(RegExp);
                     process.env.NODE_ENV = origEnv;
                 });
             });
@@ -302,10 +303,10 @@ describe('Router', function () {
                 '/finance/news/e-t-initially-horror-film-202700630.html',
                 { method: 'get' }
             );
-            expect(route.name).to.equal('article');
-            expect(route.params.site).to.equal('finance');
-            expect(route.params.category).to.equal('news');
-            expect(route.params.alias).to.equal(
+            expect(route.name).toEqual('article');
+            expect(route.params.site).toEqual('finance');
+            expect(route.params.category).toEqual('news');
+            expect(route.params.alias).toEqual(
                 'e-t-initially-horror-film-202700630.html'
             );
 
@@ -315,10 +316,10 @@ describe('Router', function () {
                     method: 'get',
                 }
             );
-            expect(route.name).to.equal('article');
-            expect(route.params.site).to.equal('finance');
-            expect(route.params.category).to.equal('news');
-            expect(route.params.alias).to.equal(
+            expect(route.name).toEqual('article');
+            expect(route.params.site).toEqual('finance');
+            expect(route.params.category).toEqual('news');
+            expect(route.params.alias).toEqual(
                 'e-t-initially-horror-film-202700630.html'
             );
 
@@ -328,10 +329,10 @@ describe('Router', function () {
                     method: 'get',
                 }
             );
-            expect(route.name).to.equal('article');
-            expect(route.params.site).to.equal('finance');
-            expect(route.params.category).to.equal('news');
-            expect(route.params.alias).to.equal(
+            expect(route.name).toEqual('article');
+            expect(route.params.site).toEqual('finance');
+            expect(route.params.category).toEqual('news');
+            expect(route.params.alias).toEqual(
                 'e-t-initially-horror-film-202700630.html'
             );
 
@@ -341,10 +342,10 @@ describe('Router', function () {
                     method: 'get',
                 }
             );
-            expect(route.name).to.equal('article');
-            expect(route.params.site).to.equal('finance');
-            expect(route.params.category).to.equal('news');
-            expect(route.params.alias).to.equal(
+            expect(route.name).toEqual('article');
+            expect(route.params.site).toEqual('finance');
+            expect(route.params.category).toEqual('news');
+            expect(route.params.alias).toEqual(
                 'e-t-initially-horror-film-202700630.html'
             );
 
@@ -352,26 +353,26 @@ describe('Router', function () {
                 '/sports/blogs/nfl-shutdown-corner/report-says-aaron-hernandez-having-trouble-paying-legal-bills-215349137.html',
                 { method: 'get' }
             );
-            expect(route.name).to.equal('article');
-            expect(route.params.site).to.equal('sports');
-            expect(route.params.category).to.equal('blogs');
-            expect(route.params.subcategory).to.equal('nfl-shutdown-corner');
-            expect(route.params.alias).to.equal(
+            expect(route.name).toEqual('article');
+            expect(route.params.site).toEqual('sports');
+            expect(route.params.category).toEqual('blogs');
+            expect(route.params.subcategory).toEqual('nfl-shutdown-corner');
+            expect(route.params.alias).toEqual(
                 'report-says-aaron-hernandez-having-trouble-paying-legal-bills-215349137.html'
             );
 
             route = router.getRoute('/new_article', { method: 'post' });
-            expect(route.name).to.equal('new_article');
+            expect(route.name).toEqual('new_article');
 
             route = router.getRoute('/new_article?foo=bar', { method: 'post' });
-            expect(route.name).to.equal('new_article');
-            expect(route.params).to.deep.equal({});
-            expect(route.query).to.deep.equal({ foo: 'bar' });
+            expect(route.name).toEqual('new_article');
+            expect(route.params).toEqual({});
+            expect(route.query).toEqual({ foo: 'bar' });
         });
 
         it('can parse query params correctly', () => {
             const route = router.getRoute('/?foo=bar&a=b&a=c&bool');
-            expect(route.query).to.deep.equal({
+            expect(route.query).toEqual({
                 foo: 'bar',
                 a: ['b', 'c'],
                 bool: '',
@@ -382,20 +383,20 @@ describe('Router', function () {
             var route = router.getRoute(
                 '/finance/news/e-t-initially-horror-film-202700630.html'
             );
-            expect(route.name).to.equal('article');
-            expect(route.method).to.equal('GET');
+            expect(route.name).toEqual('article');
+            expect(route.method).toEqual('GET');
             route = router.getRoute(
                 '/finance/news/e-t-initially-horror-film-202700630.html',
                 { method: 'GET' }
             );
-            expect(route.name).to.equal('article');
-            expect(route.method).to.equal('GET');
+            expect(route.name).toEqual('article');
+            expect(route.method).toEqual('GET');
             route = router.getRoute('/new_article', { method: 'POST' });
-            expect(route.method).to.equal('POST');
-            expect(route.name).to.equal('new_article');
+            expect(route.method).toEqual('POST');
+            expect(route.name).toEqual('new_article');
             route = router.getRoute('/case_insensitive', { method: 'get' });
-            expect(route.name).to.equal('case_insensitive');
-            expect(route.method).to.equal('GET');
+            expect(route.name).toEqual('case_insensitive');
+            expect(route.method).toEqual('GET');
         });
 
         it('non-existing route', function () {
@@ -403,80 +404,74 @@ describe('Router', function () {
                 '/finance/news/e-t-initially-horror-film-202700630.html',
                 { method: 'post' }
             );
-            expect(route).to.equal(null);
+            expect(route).toBe(null);
 
             route = router.getRoute('/finance');
-            expect(route).to.equal(null);
+            expect(route).toBe(null);
 
             route = router.getRoute('/new_article', 'delete');
-            expect(route).to.equal(null);
+            expect(route).toBe(null);
         });
         it('array route with param name collision first', function () {
             var route = router.getRoute('/array/path/with/collision/foo/abc');
-            expect(route.params.key).to.equal('abc');
+            expect(route.params.key).toEqual('abc');
         });
         it('array route with param name collision second', function () {
             var route = router.getRoute('/array/path/with/collision/bar/abc');
-            expect(route.params.key).to.equal('abc');
+            expect(route.params.key).toEqual('abc');
         });
         it('route with json string in param with consistency', function () {
             var route = router.getRoute(encodingConsistencyPath);
-            expect(route.params.json).to.equal('{"keyword":"foo"}');
+            expect(route.params.json).toEqual('{"keyword":"foo"}');
         });
         it('route with array path with different props', function () {
             var routeFoo = router.getRoute(arrayPathWithDifferentPropsFoo);
-            expect(routeFoo.params.foo).to.equal('foo');
+            expect(routeFoo.params.foo).toEqual('foo');
             var routeBar = router.getRoute(arrayPathWithDifferentPropsBar);
-            expect(routeBar.params.bar).to.equal('bar');
+            expect(routeBar.params.bar).toEqual('bar');
         });
         it('should handle a hash fragment with a question-mark', function () {
             var route = router.getRoute('/finance/news/test.html#?', {
                 method: 'get',
             });
-            expect(route.name).to.equal('article');
-            expect(route.params.site).to.equal('finance');
-            expect(route.params.category).to.equal('news');
-            expect(route.params.alias).to.equal('test.html');
+            expect(route.name).toEqual('article');
+            expect(route.params.site).toEqual('finance');
+            expect(route.params.category).toEqual('news');
+            expect(route.params.alias).toEqual('test.html');
         });
 
         it('should allow route to match multiple methods', function () {
             var route = 'multi_methods';
-            expect(router.getRoute('/' + route).name).to.equal(route);
+            expect(router.getRoute('/' + route).name).toEqual(route);
             expect(
                 router.getRoute('/' + route, { method: 'post' }).name
-            ).to.equal(route);
-            expect(router.getRoute('/' + route, { method: 'put' })).to.equal(
-                null
-            );
-            expect(router.getRoute('/' + route, { method: 'delete' })).to.equal(
+            ).toEqual(route);
+            expect(router.getRoute('/' + route, { method: 'put' })).toBe(null);
+            expect(router.getRoute('/' + route, { method: 'delete' })).toBe(
                 null
             );
         });
 
         it('should allow route to match all methods', function () {
             var route = 'all_methods';
-            expect(router.getRoute('/' + route).name).to.equal(route);
+            expect(router.getRoute('/' + route).name).toEqual(route);
             expect(
                 router.getRoute('/' + route, { method: 'post' }).name
-            ).to.equal(route);
+            ).toEqual(route);
             expect(
                 router.getRoute('/' + route, { method: 'put' }).name
-            ).to.equal(route);
+            ).toEqual(route);
             expect(
                 router.getRoute('/' + route, { method: 'delete' }).name
-            ).to.equal(route);
+            ).toEqual(route);
         });
 
         it('should allow route to match no methods', function () {
             var route = 'no_methods';
-            expect(router.getRoute('/' + route)).to.equal(null);
-            expect(router.getRoute('/' + route, { method: 'post' })).to.equal(
-                null
-            );
-            expect(router.getRoute('/' + route, { method: 'put' })).to.equal(
-                null
-            );
-            expect(router.getRoute('/' + route, { method: 'delete' })).to.equal(
+            expect(router.getRoute('/' + route)).toBe(null);
+            expect(router.getRoute('/' + route, { method: 'post' })).toBe(null);
+            expect(router.getRoute('/' + route, { method: 'put' })).toBe(null);
+            expect(router.getRoute('/' + route, { method: 'delete' })).toBe(
                 null
             );
         });
@@ -496,7 +491,7 @@ describe('Router', function () {
                 subcategory: 'SUBCATEGORY',
                 alias: 'ALIAS.html',
             });
-            expect(path).to.equal('/SITE/CATEGORY/SUBCATEGORY/ALIAS.html');
+            expect(path).toEqual('/SITE/CATEGORY/SUBCATEGORY/ALIAS.html');
         });
 
         it('handle optional params', function () {
@@ -505,23 +500,23 @@ describe('Router', function () {
                 category: 'CATEGORY',
                 alias: 'ALIAS.html',
             });
-            expect(path).to.equal('/SITE/CATEGORY/ALIAS.html');
+            expect(path).toEqual('/SITE/CATEGORY/ALIAS.html');
             path = router.makePath('article', {
                 site: 'SITE',
                 alias: 'ALIAS.html',
             });
-            expect(path).to.equal('/SITE/ALIAS.html');
+            expect(path).toEqual('/SITE/ALIAS.html');
         });
 
         it('handle custom match params', function () {
             var path = router.makePath('custom_match_params', {
                 id: '12345',
             });
-            expect(path).to.equal('/posts/12345');
+            expect(path).toEqual('/posts/12345');
             path = router.makePath('custom_match_params', {
                 id: '12345abc',
             });
-            expect(path).to.equal(null);
+            expect(path).toBe(null);
         });
 
         it('handle unamed params', function () {
@@ -529,7 +524,7 @@ describe('Router', function () {
                 foo: 'foo',
                 0: 'bar',
             });
-            expect(path).to.equal('/foo/bar');
+            expect(path).toEqual('/foo/bar');
         });
 
         it('can build query params correctly', function () {
@@ -542,7 +537,7 @@ describe('Router', function () {
                     b: ['1', '2', '3'],
                 }
             );
-            expect(path).to.equal('/?a=bar&b=1&b=2&b=3&c=42');
+            expect(path).toEqual('/?a=bar&b=1&b=2&b=3&c=42');
         });
 
         it('handle query params properly', function () {
@@ -550,7 +545,7 @@ describe('Router', function () {
             const route = router.getRoute(originalPath);
             const path = router.makePath(route.name, route.params, route.query);
 
-            expect(path).to.equal(originalPath);
+            expect(path).toEqual(originalPath);
         });
 
         it('adds no question mark with empty query', function () {
@@ -564,7 +559,7 @@ describe('Router', function () {
                     /* empty object */
                 }
             );
-            expect(path).to.equal('/foo/bar');
+            expect(path).toEqual('/foo/bar');
         });
 
         it('non-existing route', function () {
@@ -574,40 +569,40 @@ describe('Router', function () {
                 subcategory: 'SUBCATEGORY',
                 alias: 'ALIAS.html',
             });
-            expect(path).to.equal(null);
+            expect(path).toBe(null);
         });
 
         it('array route', function () {
             var path = router.makePath('array_path', {});
-            expect(path).to.equal('/array_path');
+            expect(path).toEqual('/array_path');
         });
 
         it('invalid route', function () {
             var path = router.makePath('invalid_path', {});
-            expect(path).to.equal(null);
+            expect(path).toBe(null);
         });
 
         it('path with some json value and consistency', function () {
             var path = router.makePath('json_value', {
                 json: JSON.stringify({ keyword: 'foo' }),
             });
-            expect(path).to.equal(encodingConsistencyPath);
+            expect(path).toEqual(encodingConsistencyPath);
         });
 
         it('array path with different props', function () {
             var pathFoo = router.makePath('array_path_with_different_props', {
                 foo: 'foo',
             });
-            expect(pathFoo).to.equal(arrayPathWithDifferentPropsFoo);
+            expect(pathFoo).toEqual(arrayPathWithDifferentPropsFoo);
             var pathBar = router.makePath('array_path_with_different_props', {
                 bar: 'bar',
             });
-            expect(pathBar).to.equal(arrayPathWithDifferentPropsBar);
+            expect(pathBar).toEqual(arrayPathWithDifferentPropsBar);
             var pathInvalid = router.makePath(
                 'array_path_with_different_props',
                 {}
             );
-            expect(pathInvalid).to.equal(null);
+            expect(pathInvalid).toBe(null);
         });
     });
 
@@ -618,7 +613,7 @@ describe('Router', function () {
                     path: '/',
                 },
             ]);
-        }).to['throw'](Error);
+        }).toThrow(Error);
     });
 
     it('should throw if there are routes with duplicate name', function () {
@@ -633,7 +628,7 @@ describe('Router', function () {
                     path: '/home',
                 },
             ]);
-        }).to['throw'](Error);
+        }).toThrow(Error);
     });
 
     it('should allow custom query string library', function () {
@@ -666,8 +661,8 @@ describe('Router', function () {
             }
         );
         var matched = router.getRoute('/?foo=bar&bar=baz');
-        expect(queryLib.parse.called).to.equal(true);
-        expect(matched.query).to.deep.equal({
+        expect(queryLib.parse.called).toBe(true);
+        expect(matched.query).toEqual({
             foo: 'bar',
             bar: 'baz',
         });
@@ -679,8 +674,8 @@ describe('Router', function () {
                 bar: 'baz',
             }
         );
-        expect(queryLib.stringify.called).to.equal(true);
-        expect(stringified).to.equal('/?foo=bar&bar=baz');
+        expect(queryLib.stringify.called).toBe(true);
+        expect(stringified).toEqual('/?foo=bar&bar=baz');
     });
 });
 
@@ -688,14 +683,14 @@ describe('Route', function () {
     it('match', function () {
         var router = new Router(routesObject);
         var homeRoute = router._routes.home;
-        expect(homeRoute.match()).to.equal(null, 'empty path returns null');
+        expect(homeRoute.match()).toBe(null);
     });
 
     it('should leave unset optional parameters as undefined', function () {
         var router = new Router(routesObject);
         var article = router._routes.article;
         var result = article.match('/site/alias');
-        expect(result.route.category).to.be.undefined;
-        expect(result.route.subcategory).to.be.undefined;
+        expect(result.route.category).toBe(undefined);
+        expect(result.route.subcategory).toBe(undefined);
     });
 });
