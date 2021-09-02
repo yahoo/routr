@@ -1,5 +1,8 @@
 /.github/
 /artifacts/
+/coverage/
 /examples/
 /tests/
-eslintrc.js
+.*
+*.json
+*.md
