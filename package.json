@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "eslint": "^8.0.0",
-    "jest": "^27.1.0",
+    "jest": "^28.0.0",
     "pre-commit": "^1.0.7",
     "prettier": "^2.3.2"
   },
