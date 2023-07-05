@@ -36,7 +36,7 @@ app.all('*', function (req, res) {
                 ' params = ' +
                 util.inspect(route.params) +
                 ' config = ' +
-                util.inspect(route.config)
+                util.inspect(route.config),
         );
     } else {
         res.send(404, '[Route not found]');

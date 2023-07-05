@@ -1,9 +1,7 @@
 module.exports = {
     env: {
+        es2022: true,
         node: true,
-    },
-    parserOptions: {
-        ecmaVersion: 5,
     },
     extends: 'eslint:recommended',
 };
