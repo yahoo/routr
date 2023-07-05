@@ -46,7 +46,7 @@ if (route) {
 const path = router.makePath(
     'view_user_post',
     { id: 'garfield', post: 'favoriteFood' },
-    { meal: 'breakfast' }
+    { meal: 'breakfast' },
 );
 ```
 
