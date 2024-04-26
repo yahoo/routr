@@ -14,7 +14,7 @@
     "test:cov": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "author": "Lingyan Zhu <lingyan@yahooinc.com",
+  "author": "Lingyan Zhu <lingyan@yahooinc.com>",
   "licenses": [
     {
       "type": "BSD",
