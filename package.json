@@ -22,7 +22,7 @@
     }
   ],
   "dependencies": {
-    "path-to-regexp": "^6.2.0"
+    "path-to-regexp": "^8.0.0"
   },
   "devDependencies": {
     "eslint": "^9.0.0",
