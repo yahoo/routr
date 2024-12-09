@@ -62,8 +62,8 @@ We use `if (process.env.NODE_ENV !== 'production')` to wrap around `Object.freez
 
 Two main utility plugins:
 
--   use [DefinePlugin](http://webpack.github.io/docs/list-of-plugins.html#defineplugin) to define the value for `process.env`
--   use [UglifyJsPlugin](http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin) to remove dead code.
+- use [DefinePlugin](http://webpack.github.io/docs/list-of-plugins.html#defineplugin) to define the value for `process.env`
+- use [UglifyJsPlugin](http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin) to remove dead code.
 
 Example of the webpack configuration:
 
@@ -83,8 +83,8 @@ Example of the webpack configuration:
 
 Similar to webpack, you can also use the following two utils with your favorite build system:
 
--   use [envify](https://github.com/hughsk/envify) to set `process.env.NODE_ENV` to the desired environment
--   use [uglifyjs](https://github.com/mishoo/UglifyJS2) to remove dead code.
+- use [envify](https://github.com/hughsk/envify) to set `process.env.NODE_ENV` to the desired environment
+- use [uglifyjs](https://github.com/mishoo/UglifyJS2) to remove dead code.
 
 Command-line example:
 
@@ -94,7 +94,7 @@ $ browserify index.js -t [ envify --NODE_ENV production  ] | uglifyjs -c > bundl
 
 ## API
 
--   [Routr](https://github.com/yahoo/routr/blob/master/docs/routr.md)
+- [Routr](https://github.com/yahoo/routr/blob/master/docs/routr.md)
 
 ## License
 

@@ -9,5 +9,5 @@ node app.js
 
 Then try:
 
--   http://localhost:3000/user/superman
--   http://localhost:3000/user/superman/post/how-i-saved-the-city
+- http://localhost:3000/user/superman
+- http://localhost:3000/user/superman/post/how-i-saved-the-city
