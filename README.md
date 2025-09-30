@@ -1,3 +1,7 @@
+> ⚠️ **DEPRECATED / END-OF-LIFE (EOL)** — `routr` will be unmaintained as of **2025-12-31**.
+> No new features, issues, PRs, or security fixes will be provided.
+> See the issue for more information - https://github.com/yahoo/routr/issues/263
+
 # Routr
 
 [![npm version](https://badge.fury.io/js/routr.svg)](http://badge.fury.io/js/routr)
